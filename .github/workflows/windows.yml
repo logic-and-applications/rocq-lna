@@ -1,0 +1,102 @@
+# Main doc: https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/introduction-to-github-actions
+# Runners spec: https://docs.github.com/en/free-pro-team@latest/actions/reference/specifications-for-github-hosted-runners
+# Glob expressions: https://github.com/actions/toolkit/tree/main/packages/glob
+
+name: Windows
+
+###############################################################################
+# Schedule:
+# Push on main branch
+###############################################################################
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+###############################################################################
+# Platform script options shared among all jobs
+###############################################################################
+env:
+  COQREGTESTING: y
+
+###############################################################################
+# Builds Windows installer
+###############################################################################
+jobs:
+  Windows_platform:
+    name: Windows
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+
+    steps:
+      - name: Set git to use LF
+        run: |
+          git config --global core.autocrlf false
+          git config --global core.eol lf
+
+      - name: Git checkout install scripts
+        uses: actions/checkout@v3
+        with:
+          path: main\installer
+
+      # - name: Git checkout Coq platform
+      #   uses: actions/checkout@v3
+      #   with:
+      #     repository: coq/platform
+      #     ref: "2024.10.0"
+      #     path: platform
+
+      # - name: Set switch name in coq platform
+      #   shell: cmd
+      #   # We need to output without a (windows style new line here) else bash will complain AND we rely on the fact that the file has a trailing new line.
+      #   run: |
+      #     echo | set /p dummyName="COQ_PLATFORM_SWITCH_NAME=coq_for_LA" >> platform\package_picks\coq_platform_switch_name.sh
+      #     type platform\package_picks\coq_platform_switch_name.sh
+
+      # - name: Run coq platform make windows
+      #   shell: cmd
+      #   run: platform\coq_platform_make_windows.bat -destcyg=C:\cygwin_coq_platform -arch=${{matrix.architecture}} -extent=x -large=e -parallel=p -jobs=2 -vst=n -compcert=n -pick="8.18~2023.11" -set-switch=y
+
+      - name: show file system
+        shell: cmd
+        run: tree /f
+
+      # - name: Install packages specified in cfg file
+      #   shell: cmd
+      #   # copy main\test_files\* C:\cygwin_coq_platform\home\runneradmin\coq-platform\test_files\
+      #   run: |
+      #     copy main\* C:\cygwin_coq_platform\platform
+      #     C:\cygwin_coq_platform\bin\bash --login -c "cd /platform && ./install_packages.sh packages.cfg"
+
+      # - name: Patch SerAPI
+      #   shell: cmd
+      #   run: |
+      #     copy main\patch_serapi.sh C:\cygwin_coq_platform\home\runneradmin\
+      #     C:\cygwin_coq_platform\bin\bash --login -c "./patch_serapi.sh"
+
+      # - name: Create installer
+      #   shell: cmd
+      #   run: C:\cygwin_coq_platform\bin\bash --login -c "cd /platform/ && windows/create_installer_windows.sh && mkdir /cygdrive/c/installer && cp windows_installer/*exe /cygdrive/c/installer/"
+
+      # - name: Sign the installer
+      #   run: |
+      #     New-Item -ItemType directory -Path certificate
+      #     Set-Content -Path certificate\certificate.txt -Value '${{ secrets.CODE_SIGNING_CERTIFICATE }}'
+      #     certutil -decode certificate\certificate.txt certificate\certificate.pfx
+      #     & 'C:/Program Files (x86)/Windows Kits/10/bin/10.0.17763.0/x86/signtool.exe' sign /f certificate\certificate.pfx /p '${{ secrets.CODE_SIGNING_CERTIFICATE_PASS }}' C:\installer\*.exe
+      #     Remove-Item -Path certificate\*
+
+      # - name: Run test filer
+      #   shell: cmd
+      #   run: C:\cygwin_coq_platform\bin\bash --login -c "cd coq-platform/ && ./test.sh"
+
+      # - name: "Upload Artifact"
+      #   if: always()
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: "Windows installer ${{matrix.architecture}} bits"
+      #     path: C:\installer\*.exe
+      #     retention-days: 5
