@@ -11,8 +11,15 @@ sed -i '/^OPAM_FILE_WHITELIST\[sexplib0\]/ c#OPAM_FILE_WHITELIST\[sexplib0\]' /p
 sed -i '/^OPAM_FILE_WHITELIST\[result\]/ c#OPAM_FILE_WHITELIST\[result\]' /platform/windows/create_installer_windows.sh
           
 # Change META files to not uses threading which is not supported on Windows
-sed -i '/^requires(mt,mt_posix)/ c#requires(mt,mt_posix)' .opam/coq_for_LA/lib/threads/META
-sed -i '/^type_of_threads = "posix"/ c#type_of_threads = "none"' .opam/coq_for_LA/lib/threads/META
+sed -i '/^requires(mt,mt_posix)/ c#requires(mt,mt_posix)' /opam/coq_for_LA/lib/threads/META
+sed -i '/^type_of_threads = "posix"/ c#type_of_threads = "none"' /opam/coq_for_LA/lib/threads/META
 
 # Comment out line to ignore modified warnings
 sed -i '/      echo "In package '\''$1'\'' the file '\''$file'\'' does not exist"/!b;n;c#      exit 1' /platform/windows/create_installer_windows.sh
+
+# Comment out copies of non existing files in installer and Coq.nsi
+sed -i 's/cp source.coqide\|cp source.coq-compcert/# cp source/' '/platform/windows/create_installer_windows.sh'
+sed -i 's/\(.*\)coqide/; \1coqide/' '/platform/windows/Coq.nsi'
+sed -i "s/!define MUI_ICON/; !define MUI_ICON/" '/platform/windows/Coq.nsi'
+
+
