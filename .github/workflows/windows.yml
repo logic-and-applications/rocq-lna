@@ -73,6 +73,13 @@ jobs:
           copy main\installer\* C:\cygwin_coq_platform\platform
           C:\cygwin_coq_platform\bin\bash --login -c "cd /platform && ./install_packages.sh packages.cfg"
 
+      - name: install LnA library
+        shell: cmd
+        run: |
+          mkdir C:\cygwin_coq_platform\platform\LnA
+          copy main\library\* C:\cygwin_coq_platform\platform\LnA
+          C:\cygwin_coq_platform\bin\bash --login -c "cd /platform/LnA && make && make install && cd .. && rm -rf /LnA
+
       - name: Patch SerAPI
         shell: cmd
         run: |
