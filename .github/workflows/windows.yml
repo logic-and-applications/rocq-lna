@@ -33,6 +33,8 @@ jobs:
       matrix:
         architecture:
           - "64"
+        coq-platform-pick:
+          - "8.20~2025.01"
         vscoq-version:
           - "2.1.5"
 
@@ -74,28 +76,28 @@ jobs:
 
       - name: Run coq platform make windows
         shell: cmd
-        run: platform\coq_platform_make_windows.bat -destcyg=C:\cygwin_LnA -arch=${{matrix.architecture}} -extent=i -parallel=p -jobs=2 -vst=n -compcert=n -pick="8.18~2023.11" -set-switch=y
+        run: platform\coq_platform_make_windows.bat -destcyg=C:\cygwin_LnA -arch=${{matrix.architecture}} -extent=x -parallel=p -jobs=2 -vst=n -compcert=n -pick="${{matrix.coq-platform-pick}}" -set-switch=y
 
       - name: Patch installer
         shell: cmd
         run: |
-          copy main\installer\patch_installer.sh C:\cygwin_LnA\platform
-          C:\cygwin_LnA\bin\bash --login -c "/platform/patch_installer"
+          copy main\installer\* C:\cygwin_LnA\platform\
+          C:\cygwin_LnA\bin\bash --login -c "/platform/patch_installer.sh"
 
       - name: Install vscoq-language-server
-        if: always()
+        # if: always()
         shell: cmd
         run: |
           C:\cygwin_LnA\bin\bash --login -c "opam pin add -y vscoq-language-server.${{matrix.vscoq-version}}  https://github.com/coq-community/vscoq/releases/download/v${{matrix.vscoq-version}}/vscoq-language-server-${{matrix.vscoq-version}}.tar.gz"
 
       - name: Install LnA
-        if: always()
+        # if: always()
         shell: cmd
         run: |
           C:\cygwin_LnA\bin\bash --login -c "opam pin add -y main\library\"
 
       - name: Create installer
-        if: always()
+        # if: always()
         shell: cmd
         run: |
           tree /f
