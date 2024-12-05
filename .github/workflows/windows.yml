@@ -33,6 +33,8 @@ jobs:
       matrix:
         architecture:
           - "64"
+        vscoq-version:
+          - "2.1.5"
 
     steps:
       - name: Set git to use LF
@@ -41,58 +43,76 @@ jobs:
           git config --global core.eol lf
 
       - name: Git checkout install scripts
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           path: main
 
       - name: Git checkout Coq platform
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: coq/platform
-          ref: "2024.10.0"
           path: platform
 
       - name: Set switch name in coq platform
         shell: cmd
         # We need to output without a (windows style new line here) else bash will complain AND we rely on the fact that the file has a trailing new line.
         run: |
-          echo | set /p dummyName="COQ_PLATFORM_SWITCH_NAME=coq_for_LA" >> platform\package_picks\coq_platform_switch_name.sh
+          echo | set /p dummyName="COQ_PLATFORM_SWITCH_NAME=LnA" >> platform\package_picks\coq_platform_switch_name.sh
           type platform\package_picks\coq_platform_switch_name.sh
+
+      - name: Set default install directory
+        shell: cmd
+        run: |
+          sed -i 's/\s\sInstallDir\s"C:\\\${MY_PRODUCT}"/  InstallDir "C:\\\cygwin_LnA\\\home\\\runneradmin\\\.opam\\\LnA"/g' platform/windows/Coq.nsi
+          cat platform/windows/Coq.nsi
+
+      # - name: Missing dependency
+      #   shell: cmd
+      #   run: |
+      #     sed -i '/^###################### Create installer.*/i add_folder_recursively \"/home/runneradmin/.opam/LnA/\" \"lib/sexplib0\" \"files_coq-waterproof\"' platform/windows/create_installer_windows.sh
+      #     cat platform/windows/create_installer_windows.sh
 
       - name: Run coq platform make windows
         shell: cmd
-        run: platform\coq_platform_make_windows.bat -destcyg=C:\cygwin_coq_platform -arch=${{matrix.architecture}} -extent=b -parallel=p -jobs=2 -vst=n -compcert=n -pick="8.18~2023.11" -set-switch=y
+        run: platform\coq_platform_make_windows.bat -destcyg=C:\cygwin_LnA -arch=${{matrix.architecture}} -extent=i -parallel=p -jobs=2 -vst=n -compcert=n -pick="8.18~2023.11" -set-switch=y
 
-      - name: show file system
-        shell: cmd
-        run: tree /f
-
-      - name: Install packages specified in cfg file
+      - name: Patch installer
         shell: cmd
         run: |
-          copy main\installer\* C:\cygwin_coq_platform\platform
-          C:\cygwin_coq_platform\bin\bash --login -c "cd /platform && ./install_packages.sh packages.cfg"
+          copy main\installer\patch_installer.sh C:\cygwin_LnA\platform
+          C:\cygwin_LnA\bin\bash --login -c "/platform/patch_installer"
 
-      - name: install LnA library
+      - name: Install vscoq-language-server
+        if: always()
         shell: cmd
         run: |
-          mkdir C:\cygwin_coq_platform\platform\LnA
-          copy main\library\* C:\cygwin_coq_platform\platform\LnA
-          C:\cygwin_coq_platform\bin\bash --login -c "cd /platform/LnA && make && make install && cd .. && rm -rf /LnA
+          C:\cygwin_LnA\bin\bash --login -c "opam pin add -y vscoq-language-server.${{matrix.vscoq-version}}  https://github.com/coq-community/vscoq/releases/download/v${{matrix.vscoq-version}}/vscoq-language-server-${{matrix.vscoq-version}}.tar.gz"
 
-      - name: Patch SerAPI
+      - name: Install LnA
+        if: always()
         shell: cmd
         run: |
-          copy main\installer\patch_serapi.sh C:\cygwin_coq_platform\platform\
-          C:\cygwin_coq_platform\bin\bash --login -c "/platform/patch_serapi.sh"
+          C:\cygwin_LnA\bin\bash --login -c "opam pin add -y main\library\"
 
       - name: Create installer
+        if: always()
         shell: cmd
-        run: C:\cygwin_coq_platform\bin\bash --login -c "cd /platform/ && windows/create_installer_windows.sh && mkdir /cygdrive/c/installer && cp windows_installer/*exe /cygdrive/c/installer/"
+        run: |
+          tree /f
+          C:\cygwin_LnA\bin\bash --login -c "cd /platform && windows/create_installer_windows.sh && mkdir /cygdrive/c/installer && cp windows_installer/*exe /cygdrive/c/installer/"
+
+      # - name: Sign the installer
+      #   if: always()
+      #   run: |
+      #     New-Item -ItemType directory -Path certificate
+      #     Set-Content -Path certificate\certificate.txt -Value '${{ secrets.CODE_SIGNING_CERTIFICATE }}'
+      #     certutil -decode certificate\certificate.txt certificate\certificate.pfx
+      #     & 'C:/Program Files (x86)/Windows Kits/10/bin/10.0.17763.0/x86/signtool.exe' sign /f certificate\certificate.pfx /p '${{ secrets.CODE_SIGNING_CERTIFICATE_PASS }}' C:\installer\*.exe
+      #     Remove-Item -Path certificate\*
 
       - name: "Upload Artifact"
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: "Windows installer ${{matrix.architecture}} bits"
           path: C:\installer\*.exe
