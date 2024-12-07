@@ -1,6 +1,6 @@
 opam-version: "2.0"
 name: "LnA"
-version: "0.1"
+version: "1.0"
 synopsis: "Library for Radboud University CS course Logic and Applications"
 description: """
 This is a library that creates tactics which match the theoretical proof rules taught 
@@ -12,9 +12,10 @@ authors: [
     "Engelbert Hubbers"
     "Cas Haaijman"
 ]
-license: ""
+license: "BSD-3-Clause"
 bug-reports: "https://github.com/logic-and-applications/rocq-lna/issues"
-dev-repo: "https://github.com/logic-and-applications/rocq-lna/"
+dev-repo: "git+https://github.com/logic-and-applications/rocq-lna/"
+homepage: "https://github.com/logic-and-applications/rocq-lna"
 depends: [ 
     "coq" { >= "8.8" } 
 ]
