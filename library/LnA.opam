@@ -1,0 +1,24 @@
+opam-version: "2.0"
+name: "LnA"
+version: "0.1"
+synopsis: "Library for Radboud University CS course Logic and Applications"
+description: """
+This is a library that creates tactics which match the theoretical proof rules taught 
+during Radboud University CS course Logic and Applications. The idea of this library
+is to match proofs build using coq as closely as possible to proof trees build by hand.
+"""
+maintainer: "Name <email>"
+authors: [
+    "Engelbert Hubbers"
+    "Cas Haaijman"
+]
+license: ""
+bug-reports: "https://github.com/logic-and-applications/rocq-lna/issues"
+dev-repo: "https://github.com/logic-and-applications/rocq-lna/"
+depends: [ 
+    "coq" { >= "8.8" } 
+]
+build: [
+  [make]
+]
+install: [make "install"]

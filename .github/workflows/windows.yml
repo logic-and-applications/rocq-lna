@@ -34,9 +34,9 @@ jobs:
         architecture:
           - "64"
         coq-platform-pick:
-          - "8.20~2025.01"
+          - "8.19~2024.10"
         vscoq-version:
-          - "2.1.5"
+          - "2.2.1"
 
     steps:
       - name: Set git to use LF
@@ -68,15 +68,9 @@ jobs:
           sed -i 's/\s\sInstallDir\s"C:\\\${MY_PRODUCT}"/  InstallDir "C:\\\cygwin_LnA\\\home\\\runneradmin\\\.opam\\\LnA"/g' platform/windows/Coq.nsi
           cat platform/windows/Coq.nsi
 
-      # - name: Missing dependency
-      #   shell: cmd
-      #   run: |
-      #     sed -i '/^###################### Create installer.*/i add_folder_recursively \"/home/runneradmin/.opam/LnA/\" \"lib/sexplib0\" \"files_coq-waterproof\"' platform/windows/create_installer_windows.sh
-      #     cat platform/windows/create_installer_windows.sh
-
       - name: Run coq platform make windows
         shell: cmd
-        run: platform\coq_platform_make_windows.bat -destcyg=C:\cygwin_LnA -arch=${{matrix.architecture}} -extent=x -parallel=p -jobs=2 -vst=n -compcert=n -pick="${{matrix.coq-platform-pick}}" -set-switch=y
+        run: platform\coq_platform_make_windows.bat -destcyg=C:\cygwin_LnA -arch=${{matrix.architecture}} -extent=i -parallel=p -jobs=2 -vst=n -compcert=n -pick="${{matrix.coq-platform-pick}}" -set-switch=y
 
       - name: Patch installer
         shell: cmd
@@ -94,14 +88,16 @@ jobs:
         # if: always()
         shell: cmd
         run: |
-          C:\cygwin_LnA\bin\bash --login -c "opam pin add -y main\library\"
+          mkdir C:\cygwin_LnA\home\runneradmin\LnA
+          copy main\library\* C:\cygwin_LnA\home\runneradmin\LnA
+          C:\cygwin_LnA\bin\bash --login -c "ls && opam pin add -y ./LnA"
 
       - name: Create installer
-        # if: always()
+        if: always()
         shell: cmd
         run: |
           tree /f
-          C:\cygwin_LnA\bin\bash --login -c "cd /platform && windows/create_installer_windows.sh && mkdir /cygdrive/c/installer && cp windows_installer/*exe /cygdrive/c/installer/"
+          C:\cygwin_LnA\bin\bash --login -c "cd /platform && cat windows/create_installer_windows.sh && windows/create_installer_windows.sh && mkdir /cygdrive/c/installer && cp windows_installer/*exe /cygdrive/c/installer/"
 
       # - name: Sign the installer
       #   if: always()
