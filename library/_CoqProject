@@ -1,4 +1,4 @@
--Q . "LnA"
+-Q . ""
 
 # From Iris: We sometimes want to locally override notation, and there is no good way to do that with scopes.
 -arg -w -arg -notation-overridden
