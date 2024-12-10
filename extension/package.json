@@ -1,6 +1,6 @@
 {
-  "name": "rocq-lna-vscoq",
-  "displayName": "rocq-lna-vscoq",
+  "name": "LnA-vscode-extension",
+  "displayName": "LnA-vscode-extension",
   "description": "A VS Code extension made for Radboud's CS course Logic and Application to be used in combination with vscoq",
   "version": "0.0.1",
   "publisher": "logic-and-applications-ru",
