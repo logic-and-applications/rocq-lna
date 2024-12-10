@@ -39,3 +39,9 @@ auto/
 .DS_Store
 rust/target/
 *.lock
+out
+dist
+node_modules
+.vscode-test/
+*.vsix
+.vscode/

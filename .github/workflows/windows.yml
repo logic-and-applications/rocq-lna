@@ -116,20 +116,20 @@ jobs:
       #     path: C:\installer\*.exe
       #     retention-days: 5
 
-      - name: Inject slug/short variables
-        uses: rlespinasse/github-slug-action@v5
+      # - name: Inject slug/short variables
+      #   uses: rlespinasse/github-slug-action@v5
 
-      - name: Create library archive
-        run: |
-          cd main/library
-          $VERSION = $env:GITHUB_REF_NAME_SLUG.Substring(1)
-          git archive -o ../LnA-$VERSION.tar.gz --prefix="LnA-$VERSION\" $env:GITHUB_SHA .
+      # - name: Create library archive
+      #   run: |
+      #     cd main/library
+      #     $VERSION = $env:GITHUB_REF_NAME_SLUG.Substring(1)
+      #     git archive -o ../LnA-$VERSION.tar.gz --prefix="LnA-$VERSION\" $env:GITHUB_SHA .
 
-      # - name: package extension to file
-      #   uses: lannonbr/vsce-action@4.0.0
-      #   with:
-      #     packagePath: ./extension/
-      #     args: "package"
+      - name: package extension to file
+        uses: lannonbr/vsce-action@4.0.0
+        with:
+          packagePath: ./extension/
+          args: "package"
 
       - name: Release
         uses: softprops/action-gh-release@v1
