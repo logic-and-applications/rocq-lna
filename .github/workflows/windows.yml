@@ -49,81 +49,81 @@ jobs:
         with:
           path: main
 
-      - name: Git checkout Coq platform
-        uses: actions/checkout@v4
-        with:
-          repository: coq/platform
-          path: platform
+      # - name: Git checkout Coq platform
+      #   uses: actions/checkout@v4
+      #   with:
+      #     repository: coq/platform
+      #     path: platform
 
-      - name: Set switch name in coq platform
-        shell: cmd
-        # We need to output without a (windows style new line here) else bash will complain AND we rely on the fact that the file has a trailing new line.
-        run: |
-          echo | set /p dummyName="COQ_PLATFORM_SWITCH_NAME=LnA" >> platform\package_picks\coq_platform_switch_name.sh
-          type platform\package_picks\coq_platform_switch_name.sh
-
-      - name: Set default install directory
-        shell: cmd
-        run: |
-          sed -i 's/\s\sInstallDir\s"C:\\\${MY_PRODUCT}"/  InstallDir "C:\\\cygwin_LnA\\\home\\\runneradmin\\\.opam\\\LnA"/g' platform/windows/Coq.nsi
-          cat platform/windows/Coq.nsi
-
-      - name: Run coq platform make windows
-        shell: cmd
-        run: platform\coq_platform_make_windows.bat -destcyg=C:\cygwin_LnA -arch=${{matrix.architecture}} -extent=i -parallel=p -jobs=2 -vst=n -compcert=n -pick="${{matrix.coq-platform-pick}}" -set-switch=y
-
-      - name: Patch installer
-        shell: cmd
-        run: |
-          copy main\installer\* C:\cygwin_LnA\platform\
-          C:\cygwin_LnA\bin\bash --login -c "/platform/patch_installer.sh"
-
-      - name: Install vscoq-language-server
-        # if: always()
-        shell: cmd
-        run: |
-          C:\cygwin_LnA\bin\bash --login -c "opam pin add -y vscoq-language-server.${{matrix.vscoq-version}}  https://github.com/coq-community/vscoq/releases/download/v${{matrix.vscoq-version}}/vscoq-language-server-${{matrix.vscoq-version}}.tar.gz"
-
-      - name: Install LnA
-        # if: always()
-        shell: cmd
-        run: |
-          mkdir C:\cygwin_LnA\home\runneradmin\LnA
-          copy main\library\* C:\cygwin_LnA\home\runneradmin\LnA
-          C:\cygwin_LnA\bin\bash --login -c "ls && opam pin add -y ./LnA"
-
-      - name: Create installer
-        if: always()
-        shell: cmd
-        run: |
-          tree /f
-          C:\cygwin_LnA\bin\bash --login -c "cd /platform && cat windows/create_installer_windows.sh && windows/create_installer_windows.sh && mkdir /cygdrive/c/installer && cp windows_installer/*exe /cygdrive/c/installer/"
-
-      # - name: Sign the installer
-      #   if: always()
+      # - name: Set switch name in coq platform
+      #   shell: cmd
+      #   # We need to output without a (windows style new line here) else bash will complain AND we rely on the fact that the file has a trailing new line.
       #   run: |
-      #     New-Item -ItemType directory -Path certificate
-      #     Set-Content -Path certificate\certificate.txt -Value '${{ secrets.CODE_SIGNING_CERTIFICATE }}'
-      #     certutil -decode certificate\certificate.txt certificate\certificate.pfx
-      #     & 'C:/Program Files (x86)/Windows Kits/10/bin/10.0.17763.0/x86/signtool.exe' sign /f certificate\certificate.pfx /p '${{ secrets.CODE_SIGNING_CERTIFICATE_PASS }}' C:\installer\*.exe
-      #     Remove-Item -Path certificate\*
+      #     echo | set /p dummyName="COQ_PLATFORM_SWITCH_NAME=LnA" >> platform\package_picks\coq_platform_switch_name.sh
+      #     type platform\package_picks\coq_platform_switch_name.sh
 
-      - name: "Upload Artifact"
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: "Windows installer ${{matrix.architecture}} bits"
-          path: C:\installer\*.exe
-          retention-days: 5
+      # - name: Set default install directory
+      #   shell: cmd
+      #   run: |
+      #     sed -i 's/\s\sInstallDir\s"C:\\\${MY_PRODUCT}"/  InstallDir "C:\\\cygwin_LnA\\\home\\\runneradmin\\\.opam\\\LnA"/g' platform/windows/Coq.nsi
+      #     cat platform/windows/Coq.nsi
+
+      # - name: Run coq platform make windows
+      #   shell: cmd
+      #   run: platform\coq_platform_make_windows.bat -destcyg=C:\cygwin_LnA -arch=${{matrix.architecture}} -extent=i -parallel=p -jobs=2 -vst=n -compcert=n -pick="${{matrix.coq-platform-pick}}" -set-switch=y
+
+      # - name: Patch installer
+      #   shell: cmd
+      #   run: |
+      #     copy main\installer\* C:\cygwin_LnA\platform\
+      #     C:\cygwin_LnA\bin\bash --login -c "/platform/patch_installer.sh"
+
+      # - name: Install vscoq-language-server
+      #   # if: always()
+      #   shell: cmd
+      #   run: |
+      #     C:\cygwin_LnA\bin\bash --login -c "opam pin add -y vscoq-language-server.${{matrix.vscoq-version}}  https://github.com/coq-community/vscoq/releases/download/v${{matrix.vscoq-version}}/vscoq-language-server-${{matrix.vscoq-version}}.tar.gz"
+
+      # - name: Install LnA
+      #   # if: always()
+      #   shell: cmd
+      #   run: |
+      #     mkdir C:\cygwin_LnA\home\runneradmin\LnA
+      #     copy main\library\* C:\cygwin_LnA\home\runneradmin\LnA
+      #     C:\cygwin_LnA\bin\bash --login -c "ls && opam pin add -y ./LnA"
+
+      # - name: Create installer
+      #   if: always()
+      #   shell: cmd
+      #   run: |
+      #     tree /f
+      #     C:\cygwin_LnA\bin\bash --login -c "cd /platform && cat windows/create_installer_windows.sh && windows/create_installer_windows.sh && mkdir /cygdrive/c/installer && cp windows_installer/*exe /cygdrive/c/installer/"
+
+      # # - name: Sign the installer
+      # #   if: always()
+      # #   run: |
+      # #     New-Item -ItemType directory -Path certificate
+      # #     Set-Content -Path certificate\certificate.txt -Value '${{ secrets.CODE_SIGNING_CERTIFICATE }}'
+      # #     certutil -decode certificate\certificate.txt certificate\certificate.pfx
+      # #     & 'C:/Program Files (x86)/Windows Kits/10/bin/10.0.17763.0/x86/signtool.exe' sign /f certificate\certificate.pfx /p '${{ secrets.CODE_SIGNING_CERTIFICATE_PASS }}' C:\installer\*.exe
+      # #     Remove-Item -Path certificate\*
+
+      # - name: "Upload Artifact"
+      #   if: always()
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: "Windows installer ${{matrix.architecture}} bits"
+      #     path: C:\installer\*.exe
+      #     retention-days: 5
 
       - name: Inject slug/short variables
-        uses: rlespinasse/github-slug-action@v4
+        uses: rlespinasse/github-slug-action@v5
 
-      - name: Create language-server archive
+      - name: Create library archive
         run: |
-          cd language-server
-          VERSION="${GITHUB_REF_NAME_SLUG#v}"
-          git archive -o ../LnA-$VERSION.tar.gz --prefix=LnA-$VERSION/ $GITHUB_SHA .
+          cd main/library
+          $VERSION = $env:GITHUB_REF_NAME_SLUG.Substring(1)
+          git archive -o ../LnA-$VERSION.tar.gz --prefix="LnA-$VERSION\" $env:GITHUB_SHA .
 
       # - name: package extension to file
       #   uses: lannonbr/vsce-action@4.0.0
@@ -136,9 +136,9 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/')
         with:
           # *.vsix
+          # /cygdrive/c/installer/*exe
           files: |
             LnA-*.tar.gz
-            /cygdrive/c/installer/*exe
           fail_on_unmatched_files: true
           draft: true
           prerelease: false
