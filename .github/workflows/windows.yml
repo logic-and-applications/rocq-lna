@@ -168,7 +168,7 @@ jobs:
       - name: Download Installer Artifact
         uses: actions/download-artifact@v4
         with:
-          name: vsix-artifact
+          name: LnA-Windows-installer
           path: ./release-assets
 
       - name: Download Library Archive Artifact
@@ -177,18 +177,8 @@ jobs:
           name: library-archive
           path: ./release-assets
 
-      - name: Set Up GitHub CLI
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-
       - name: Install GitHub CLI
         run: sudo apt-get install gh
-
-      - name: Authenticate GitHub CLI
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh auth login --with-token
 
       - name: Create GitHub Release
         env:
