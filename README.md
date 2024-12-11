@@ -7,23 +7,27 @@ This repository is created for the Radboud University Computing Science course '
 This guide is written to use [Visual Studio Code] (VS Code) as an editor. If you prefer not to send any telemetry, [VSCodium] should work, just replace all instances of `code` in this guide with `codium`.
 
 1. First make sure you have a working installation of [Visual Studio Code].
-2. Check if the editor can be accessed with the shell of your choice by running `code -v`
-   - If you have a working installation of VS Code, but `code -v` does not work, you might have to add the installation directory to your PATH environment variable.
-3. Install `vscoq-language-server` and our `LnA` package.
+2. Check if the editor is added to the PATH evironment variable by opening a shell (eg. using Terminal, Powershell, etc) of your choice and running `code -v`. This should look similar to the following, the version may differ:
 
-   - Windows users can download our custom installer from our [latest release] page.
+   ![Example of a VS Code working in a shell](images/code-in-shell.png)
+
+   - If you have a working installation of VS Code, but `code -v` does not work, you might have to add the installation directory to your PATH environment variable.
+
+3. Next we will install `vscoq-language-server` and our `LnA` package:
+
+   - Windows users can do this by downloading the file called ` LnA-windows-installer.exe` from our [latest release] page.
      DO NOT CHANGE THE INSTALLATION LOCATION. For more information on using this installer, got to the [dedicated section](#using-the-installer-for-windows-users) for using the installer on this page.
 
    - Linux and Apple users can manually install the prerequisite packages through `opam`.
 
      1. Apple users only: install `gpatch` using `brew install gpatch`
-     2. Install `opam` from the shell of your choice, for example for Apple users:
+     2. Install `opam` from the package manager of your choice, for example for Apple users:
 
         ```shell
         brew install opam
         ```
 
-        Ubuntu users
+        or
 
         ```shell
         apt install opam
@@ -37,40 +41,55 @@ This guide is written to use [Visual Studio Code] (VS Code) as an editor. If you
         ```
      4. Download and install our custom LnA libarary through opam by running
         ```shell
-        opam pin add -y LnA.1.0 ttps://github.com/logic-and-applications/rocq-lna/releases/download/v1.0/LnA.1.0.tar.gz
+        opam pin add -y LnA https://github.com/logic-and-applications/rocq-lna/releases/download/v0.0.1/LnA-0.0.1.tar.gz
         ```
 
-4. Install the 2.2.1 version of the [`vscoq`] extension
+4. Install the [`vscoq`] extension.
 
-   - Optionally, this can be done through shell by running
+   - Optionally, this can be done through a shell by running
 
-   `code --install-extension maximedenes.vscoq@2.2.1`
+     ```shell
+     code --install-extension maximedenes.vscoq
+     ```
 
-   - For windows users, opening VS Code with this extension active for the first time will probably throw up the following error message, ignore it.
+   - Opening VS Code with this extension active for the first time will probably throw up the following error message, ignore it.
      ![Error message throw after installing vscoq, ignore it](images/vscoq-installation-error.png)
      Click it away by pressing `Cancel` and proceed to the next step, where we will solve it.
 
-5. Add the path to the installed location of `vscoqtop` by adding it to the User Settings.
-   - Windows users who used the installer can do this by adding the following to the User Settings JSON (press ctrl+shift+P in VS Code and type "User Settings (JSON)", then hit Enter)
-     ```json
-     {
-       "vscoq.path": "C:\\cygwin_LnA\\home\\runneradmin\\.opam\\LnA\\bin\\vscoqtop"
-     }
-     ```
-   - Apple and Linux users can locate the location of vscoqtop by running
-     ```shell
-     which vscoqtop
-     ```
-     which they can add to their user settings in the same way
+5. To make `vscoq` able to function, we will add the path to the installed location of `vscoqtop` to the User Settings of the extension:
+
+   1. Find the path to `vscoqtop`. For Windows users using the installer this will be
+
+      ```
+      "C:\\cygwin_LnA\\home\\runneradmin\\.opam\\LnA\\bin\\vscoqtop"
+      ```
+
+      Otherwise, you can find it by running
+
+      ```shell
+      which vscoqtop
+      ```
+
+      on unix machines with opam added to the PATH environment correctly.
+
+   2. Add this path to the `path` setting of `vscoq` (press ctrl+shift+P in VS Code and type "User Settings (JSON)", then hit Enter). Saving this file will save the setting.
+      ```json
+      {
+         "vscoq.path": "C:\\cygwin_LnA\\home\\runneradmin\\.opam\\LnA\\bin\\vscoqtop"
+         ...there may be other options
+      }
+      ```
+   3. Close and re-open VS Code. The extension should now work for any `.v` file.
+
 6. Download and install our custom VS Code extension: `LnA-VS-code`.
 
    1. Go to the [latest release]
-   2. Download the `LnA-VS-Code.vsix` file
-   3. navigate to the location of the dowloaded file in a shell and run
+   2. Download the `LnA-vscode-extension-0.0.1.vsix` file
+   3. Navigate to the location of the dowloaded file in a shell (for example by navigating to it in explorer and right clicking in the folder on the `Open in Terminal` option) and run
 
-   ```shell
-   code --install-extension LnA-VS-Code.vsix
-   ```
+      ```shell
+      code --install-extension LnA-vscode-extension-0.0.1.vsix
+      ```
 
 If everything worked, you should now be able to open one of our exercises and step through the file using `Alt+DownArrow`, or to the cursor using `Alt+RightArrow`. A second window should open to the right, and it should look similar to the following image:
 
@@ -81,9 +100,13 @@ If everything worked, you should now be able to open one of our exercises and st
 Windows users can download our custom installer from our [latest release] page. DO NOT CHANGE THE INSTALLATION DIRECTORY!
 
 1. We have not signed the installer, so windows will give a warning that the application about to be installed is not recognized:
+
    ![Initial unsigned installer warning](images/initial-unsigned-installer-warning.png)
+
    Ignore this warning by clicking `More info` and `Run anyway`
+
    ![Bypassing unsigned installer warning](images/bypassing-unsigned-installer-warning.png)
+
 2. Allow the installer to make changes on your device by clicking `Yes` to enter the installation wizard. Then click past the start and agree to Rocq's user license agreement.
 3. Next you may choose which components to install. Of these, only `coqide` is not required for the course. If you do not want `coqide`, uncheck it and click `Next`.
 
