@@ -1,13 +1,13 @@
 # Roqc-lna README
 
-This repository is created for the Radboud University Computing Science course 'Logic and Applications' to create a rocq environment where the tactics match as closely as possible to logical rules taught in this course.
+This repository is created for the Radboud University Computing Science course 'Logic and Applications' to create a Rocq environment where the tactics match as closely as possible to logical rules taught in this course.
 
 ## Installation guide
 
 This guide is written to use [Visual Studio Code] (VS Code) as an editor. If you prefer not to send any telemetry, [VSCodium] should work, just replace all instances of `code` in this guide with `codium`.
 
 1. First make sure you have a working installation of [Visual Studio Code].
-2. Check if the editor is added to the PATH evironment variable by opening a shell (eg. using Terminal, Powershell, etc) of your choice and running `code -v`. This should look similar to the following, the version may differ:
+2. Check if the editor is added to the PATH environment variable by opening a shell (eg. using Terminal, Powershell, etc) of your choice and running `code -v`. This should look similar to the following, the version may differ:
 
    ![Example of a VS Code working in a shell](images/code-in-shell.png)
 
@@ -39,7 +39,7 @@ This guide is written to use [Visual Studio Code] (VS Code) as an editor. If you
         ```shell
         opam pin add -y vscoq-language-server.2.2.1 https://github.com/coq-community/vscoq/releases/download/v2.2.1/vscoq-language-server-2.2.1.tar.gz
         ```
-     4. Download and install our custom LnA libarary through opam by running
+     4. Download and install our custom LnA library through opam by running
         ```shell
         opam pin add -y LnA https://github.com/logic-and-applications/rocq-lna/releases/download/v0.0.1/LnA-0.0.1.tar.gz
         ```
@@ -85,7 +85,7 @@ This guide is written to use [Visual Studio Code] (VS Code) as an editor. If you
 
    1. Go to the [latest release]
    2. Download the `LnA-vscode-extension-0.0.1.vsix` file
-   3. Navigate to the location of the dowloaded file in a shell (for example by navigating to it in explorer and right clicking in the folder on the `Open in Terminal` option) and run
+   3. Navigate to the location of the downloaded file in a shell (for example by navigating to it in explorer and right clicking in the folder on the `Open in Terminal` option) and run
 
       ```shell
       code --install-extension LnA-vscode-extension-0.0.1.vsix
@@ -110,14 +110,14 @@ Windows users can download our custom installer from our [latest release] page. 
 2. Allow the installer to make changes on your device by clicking `Yes` to enter the installation wizard. Then click past the start and agree to Rocq's user license agreement.
 3. Next you may choose which components to install. Of these, only `coqide` is not required for the course. If you do not want `coqide`, uncheck it and click `Next`.
 
-   `coqide` is a dedicated ide created for rocq. You may choose to use this during the course, but it does not provide some of the custom the functionality of our VS Code extension or ProofWeb. To be sure your exercise is allowed for this course, you can copy the file to ProofWeb and check there.
+   `coqide` is a dedicated ide created for Rocq. You may choose to use this during the course, but it does not provide some of the custom the functionality of our VS Code extension or ProofWeb. To be sure your exercise is allowed for this course, you can copy the file to ProofWeb and check there.
    ![Choosing which components to install](images/choose-components-installer.png)
 
 4. DO NOT CHANGE THE INSTALLATION DIRECTORY! Changing the installation directory can have various strange side effects and will likely not work. Simply click `Install` at this step.
    ![DO NOT CHANGE THE INSTALLATION DIRECTORY!](images/do-not-change-the-installation-directory.png)
 5. Continue with step 4 from the [Installation Guide](#installation-guide).
 
-<!-- Links -->!
+<!-- Links -->
 
 [Visual Studio Code]: https://code.visualstudio.com/download
 [VSCodium]: https://github.com/VSCodium/vscodium/releases
