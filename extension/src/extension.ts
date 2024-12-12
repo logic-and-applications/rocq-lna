@@ -19,8 +19,9 @@ function isPragma(pragma: string): pragma is pragma {
 
 function getPragmaData(proofBlock: ProofBlock, editor: TextDocument): PragmaData {
 	for (let [lineNumber, line] of editor.getText(proofBlock.range).split("\n").entries()) {
-		const pragma = line.replaceAll(/[\(\*]|[\*\)]/g, "").trim();
+		const pragma = line.replaceAll(/[\(\*\!]|[\*\)]/g, "").trim();
 		if (isPragma(pragma)) {
+			lineNumber += proofBlock.range.start.line;
 			const range = new Range(new Position(lineNumber, 0), new Position(lineNumber, line.length - 1));
 			return { pragma, range };
 		}
@@ -79,6 +80,7 @@ async function updateDecorations(document: TextDocument) {
 	try {
 		const documentProofs = await vscoq?.exports.getDocumentProofs(document.uri);
 
+
 		if (!documentProofs) { return; }
 
 		const decorations = documentProofs.proofs.flatMap((proofBlock) => {
@@ -99,7 +101,6 @@ let vscoq: Extension<VscoqExport> | undefined;
 const log = window.createOutputChannel('rocq-lna');
 export function activate() {
 	vscoq = extensions.getExtension('maximedenes.vscoq');
-
 	log.appendLine("Extension activated !");
 
 	window.onDidChangeActiveTextEditor(editor => {

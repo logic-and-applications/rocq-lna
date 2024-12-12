@@ -1,5 +1,5 @@
 {
-  "name": "LnA-vscode-extension",
+  "name": "lna-vscode-extension",
   "displayName": "LnA-vscode-extension",
   "description": "A VS Code extension made for Radboud's CS course Logic and Application to be used in combination with vscoq",
   "version": "0.0.1",

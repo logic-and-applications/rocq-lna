@@ -1,12 +1,6 @@
 
 const general_tacs = ["Focus", "Unfocus", "SearchAbout", "Check", "Print", "Eval", "About", "Locate", "Proof", "Qed"];
 
-// ***************************************************************
-// Tactics for "Beweren en Bewijzen 2016", corresponding to BenB.v
-// Based on an email from Engelbert Hubbers on 2016-02-23
-// And a further email from Engelbert Hubbers on 2019-05-13
-// And a further email from Engelbert Hubbers on 2021-05-31
-
 // Placeholder voor constructieve bewijzen:
 const allowed_tacs_benbco = [
     "hyp", "assumption", "exact", "imp_e", "imp_i",
@@ -45,6 +39,8 @@ const allowed_tacs_benbin = [
     "f_equal",
 ].concat(allowed_tacs_benbta);
 
+const allowed_tacs_LnApose = ["pose proof"].concat(allowed_tacs_benb);
+
 // ***************************************************************
 
 export const allowLists = {
@@ -55,6 +51,7 @@ export const allowLists = {
     benb_proof: allowed_tacs_benb,
     benbta_proof: allowed_tacs_benbta,
     benbin_proof: allowed_tacs_benbin,
+    lnapose_proof: allowed_tacs_LnApose,
 } as const;
 export type pragma = keyof typeof allowLists;
 export const pragmas = Object.keys(allowLists);
