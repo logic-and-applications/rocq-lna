@@ -8,7 +8,7 @@ An extension made for Radboud University CS course Logic and Applications to hig
 
 ## Requirements
 
-Requires $\geq$ Vscoq v2.2.2 to be installed as well
+Requires $\geq$ Vscoq v2.2.1 to be installed as well
 
 ## Release Notes
 

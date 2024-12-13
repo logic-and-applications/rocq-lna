@@ -21,16 +21,22 @@ This guide is written to use [Visual Studio Code] (VS Code) as an editor. If you
    - Linux and Apple users can manually install the prerequisite packages through `opam`.
 
      1. Apple users only: install `gpatch` using `brew install gpatch`
-     2. Install `opam` from the package manager of your choice, for example for Apple users:
+     2. Install and initialize [`opam`] from the package manager of your choice, for example for Apple users:
 
         ```shell
+        brew update
         brew install opam
+        opam init
+        eval $(opam env --switch=default)
         ```
 
         or
 
         ```shell
-        apt install opam
+        apt-get update
+        apt-get install opam
+        opam init
+        eval $(opam env --switch=default)
         ```
 
         etc.
@@ -119,3 +125,4 @@ Windows users can download our custom installer from our [latest release] page. 
 [VSCodium]: https://github.com/VSCodium/vscodium/releases
 [`vscoq`]: https://marketplace.visualstudio.com/items?itemName=maximedenes.vscoq
 [latest release]: https://github.com/logic-and-applications/rocq-lna/releases/latest
+[`opam`]: https://opam.ocaml.org/doc/Install.html
