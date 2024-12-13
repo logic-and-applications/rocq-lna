@@ -4,3 +4,6 @@
 -arg -w -arg -notation-overridden
 
 LnA.v
+KripkeLA.v
+KripkeS5LA.v
+KripkeS5nLA.v
