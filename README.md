@@ -35,11 +35,7 @@ This guide is written to use [Visual Studio Code] (VS Code) as an editor. If you
 
         etc.
 
-     3. Install vscoq-language-server version 2.2.1 through opam by running
-        ```shell
-        opam pin add -y vscoq-language-server.2.2.1 https://github.com/coq-community/vscoq/releases/download/v2.2.1/vscoq-language-server-2.2.1.tar.gz
-        ```
-     4. Download and install our custom LnA library through opam by running
+     3. Download and install our custom LnA library through opam by running
         ```shell
         opam pin add -y LnA https://github.com/logic-and-applications/rocq-lna/releases/download/v0.0.1/LnA-0.0.1.tar.gz
         ```

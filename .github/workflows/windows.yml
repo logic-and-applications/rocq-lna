@@ -129,7 +129,7 @@ jobs:
           path: extension/*.vsix
 
   ###############################################################################
-  # Builds the rocq library LnA
+  # Builds the Rocq library LnA
   ###############################################################################
   archive-library:
     runs-on: ubuntu-latest
