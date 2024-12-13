@@ -47,13 +47,11 @@ function createBlockDecorations(proofBlock: ProofBlock, editor: TextDocument) {
 	const decorations = [];
 
 	for (let { tactic, range } of proofBlock.steps) {
-		// Only get first word of tactic
-		tactic = tactic.replaceAll(".", "").split(" ")[0];
 		if (isBeforePragma(pragmaData, range.start.line)) {
 			continue;
 		}
 
-		if (allowList.includes(tactic)) {
+		if (allowList.some((allowedTactic) => tactic.includes(allowedTactic))) {
 			continue;
 		}
 
@@ -79,7 +77,6 @@ async function updateDecorations(document: TextDocument) {
 	if (!window.activeTextEditor) { return; }
 	try {
 		const documentProofs = await vscoq?.exports.getDocumentProofs(document.uri);
-
 
 		if (!documentProofs) { return; }
 
