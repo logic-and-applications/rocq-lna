@@ -13,6 +13,28 @@ type PragmaData = {
 
 let timeout: NodeJS.Timeout;
 
+function splitWithRange(text: string, range: Range, separator: string): [string, Range][] {
+	const splitText = text.split(separator);
+	const textWithRanges: [string, Range][] = [];
+	let rangeStart = range.start;
+	for (let textFragment of splitText) {
+		const lines = textFragment.split("\n");
+
+		let end: Position;
+		if (lines.length === 1) {
+			end = new Position(rangeStart.line, rangeStart.character + textFragment.length + separator.length);
+		} else {
+			const lineEnd = rangeStart.line + lines.length - 1;
+			const charEnd = lines[lines.length - 1].length;
+			end = new Position(lineEnd, charEnd);
+		}
+
+		textWithRanges.push([textFragment, new Range(rangeStart, end)]);
+		rangeStart = end;
+	}
+	return textWithRanges;
+}
+
 function isPragma(pragma: string): pragma is pragma {
 	return pragmas.includes(pragma);
 }
@@ -36,7 +58,7 @@ function isBeforePragma(pragmaData: PragmaData, proofLine: number) {
 function createDecoration(range: Range, tacticName: string, pragma: string): DecorationOptions {
 	return {
 		range: range,
-		hoverMessage: `tactic ${tacticName} is not allowed for ${pragma} proofs	.`,
+		hoverMessage: `tactic ${tacticName.replace(".", "")} is not allowed for ${pragma} proofs	.`,
 	};
 }
 
@@ -51,11 +73,14 @@ function createBlockDecorations(proofBlock: ProofBlock, editor: TextDocument) {
 			continue;
 		}
 
-		if (allowList.some((allowedTactic) => tactic.includes(allowedTactic))) {
-			continue;
-		}
+		for (const [splitTactic, splitRange] of splitWithRange(tactic, range, ";")) {
 
-		decorations.push(createDecoration(range, tactic, pragmaData.pragma));
+			if (allowList.some((allowedTactic) => splitTactic.includes(allowedTactic))) {
+				continue;
+			}
+
+			decorations.push(createDecoration(splitRange, splitTactic, pragmaData.pragma));
+		}
 	}
 
 	return decorations;
