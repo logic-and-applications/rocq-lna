@@ -13,6 +13,18 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Install opam
+        run: |
+          sudo apt update
+          sudo apt install -y opam
+          opam init --disable-sandboxing -y  # Initialize opam (disable sandboxing to avoid some issues)
+          eval $(opam env)  # Configure the environment for opam
+
+      - name: Install LnA
+        run: |
+          cd library
+          opam pin add . -y
+
       - name: Run Makefile.local.test
         run: |
           cd library
