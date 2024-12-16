@@ -1,3 +1,4 @@
+import { ErrorCodes } from 'vscode-languageclient';
 import allowLists, { pragma, pragmas } from './tactics';
 import { DocumentProofsResponse, ProofBlock, VscoqExport } from './types';
 import { DecorationOptions, Extension, extensions, Location, Position, Range, TextDocument, TextDocumentChangeEvent, TextEditor, window, workspace } from 'vscode';
@@ -113,7 +114,8 @@ async function updateDecorations(document: TextDocument) {
 
 		applyDecorations(decorations);
 	} catch (e) {
-		if (e && typeof e === "object" && "code" in e && e.code === "ServerCancelled") {
+		const ServerCancelledCode = -32802;
+		if (e && typeof e === "object" && "code" in e && e.code === ServerCancelledCode) {
 			triggerUpdateDecorations(document, 400);
 		}
 	}
