@@ -1,0 +1,1 @@
+Require Import LnA.KripkeS5nLA.

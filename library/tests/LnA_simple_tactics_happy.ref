@@ -1,0 +1,187 @@
+"happy_test_con_i"
+     : string
+2 goals
+  
+  ============================
+  a
+
+goal 2 is:
+ b
+"happy_test_con_e1"
+     : string
+1 goal
+  
+  ============================
+  a /\ b
+"happy_test_con_e2"
+     : string
+1 goal
+  
+  ============================
+  a /\ b
+"happy_test_dis_i1"
+     : string
+1 goal
+  
+  ============================
+  a
+"happy_test_dis_i2"
+     : string
+1 goal
+  
+  ============================
+  b
+"happy_test_dis_e"
+     : string
+3 goals
+  
+  ============================
+  a \/ b
+
+goal 2 is:
+ a
+goal 3 is:
+ a
+"happy_test_imp_i"
+     : string
+1 goal
+  
+  H : a
+  ============================
+  b
+"happy_test_imp_e"
+     : string
+2 goals
+  
+  ============================
+  a -> b
+
+goal 2 is:
+ a
+"happy_test_all_i"
+     : string
+1 goal
+  
+  xNew : X
+  ============================
+  xNew = xNew
+"happy_test_all_e"
+     : string
+1 goal
+  
+  ============================
+  forall xQuant : X, xQuant = xQuant
+"happy_test_eqv_i"
+     : string
+2 goals
+  
+  ============================
+  a -> b
+
+goal 2 is:
+ b -> a
+"happy_test_eqv_e1"
+     : string
+1 goal
+  
+  ============================
+  a <-> b
+"happy_test_eqv_e2"
+     : string
+1 goal
+  
+  ============================
+  a <-> b
+"happy_test_iff_i"
+     : string
+2 goals
+  
+  H1 : a
+  ============================
+  b
+
+goal 2 is:
+ a
+"happy_test_iff_e1"
+     : string
+2 goals
+  
+  ============================
+  a <-> b
+
+goal 2 is:
+ b
+"happy_test_iff_e2"
+     : string
+2 goals
+  
+  ============================
+  a <-> b
+
+goal 2 is:
+ a
+"happy_test_neg_e"
+     : string
+2 goals
+  
+  ============================
+  ~ a
+
+goal 2 is:
+ a
+"happy_test_fls_e"
+     : string
+1 goal
+  
+  ============================
+  False
+"happy_test_LEM"
+     : string
+No more goals.
+"happy_test_exi_i"
+     : string
+1 goal
+  
+  ============================
+  x1 = x1
+"happy_test_exi_e"
+     : string
+2 goals
+  
+  ============================
+  exists xQuant : X, xQuant = xQuant
+
+goal 2 is:
+ x1 = x1
+"happy_test_hyp"
+     : string
+No more goals.
+"happy_test_neg_i"
+     : string
+2 goals
+  
+  H : a
+  ============================
+  ~ b
+
+goal 2 is:
+ b
+"happy_test_neg_e"
+     : string
+2 goals
+  
+  H : ~ True
+  ============================
+  ~ a
+
+goal 2 is:
+ a
+"happy_test_replace"
+     : string
+2 goals
+  
+  ============================
+  a = b
+
+goal 2 is:
+ b

@@ -1,0 +1,53 @@
+"test_in_cc_happy"
+     : string
+1 goal
+  
+  ============================
+  b <= a <= c
+"test_in_co_happy"
+     : string
+1 goal
+  
+  ============================
+  b <= a < c
+"test_in_oc_happy"
+     : string
+1 goal
+  
+  ============================
+  b < a <= c
+"test_in_oo_happy"
+     : string
+1 goal
+  
+  ============================
+  b < a < c
+"test_in_ccZ_happy"
+     : string
+1 goal
+  
+  ============================
+  y <= x <= z
+"test_in_coZ_happy"
+     : string
+1 goal
+  
+  ============================
+  y <= x <= z
+"test_in_ocZ_happy"
+     : string
+1 goal
+  
+  ============================
+  y <= x <= z
+"test_in_ooZ_happy"
+     : string
+1 goal
+  
+  ============================
+  y <= x <= z
+"test_interval_sad"
+     : string
+File "/home/cas/Documents/School/Research_internship/rocq-lna/library/tests/LnA_intervals.v", line 58, characters 13-21:
+The command has indeed failed with message:
+Tactic failure: (the goal is not an interval).

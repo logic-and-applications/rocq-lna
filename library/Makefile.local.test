@@ -1,0 +1,41 @@
+# use MAKE_REF=1 to generate new reference files for the test suite
+MAKE_REF:=
+
+# Only test reference output on known versions of Coq, to avoid blocking
+# Coq CI when they change the printing a little.
+# Need to make this a lazy variable (`=` instead of `:=`) since COQ_VERSION is only set later.
+COQ_REF=1
+
+# the test suite
+TESTFILES:=$(shell find tests -name "*.v")
+
+test: $(TESTFILES:.v=.vo)
+.PHONY: test
+
+COQTOP=coqtop
+COQ_TEST=$(COQTOP) $(COQDEBUG) -batch -test-mode
+
+# ./.coqdeps.d: $(TESTFILES)
+# 	$(SHOW)'COQDEP TESTFILES'
+# 	$(HIDE)$(COQDEP) -dyndep var $(COQMF_COQLIBS_NOML) $^ $(redir_if_ok)
+# -include tests/.coqdeps.d
+
+# Main test script (comments out-of-line because macOS otherwise barfs?!?)
+# - Determine reference file (`REF`).
+# - Print user-visible status line.
+# - unset env vars that change Coq's output
+# - Dump Coq output into a temporary file.
+# - Run `sed -i` on that file in a way that works on macOS.
+# - Either compare the result with the reference file, or move it over the reference file.
+# - Cleanup, and mark as done for make.
+$(TESTFILES:.v=.vo): %.vo: %.v $(if $(MAKE_REF),,%.ref)
+	$(HIDE)REF=$*".ref" && \
+	  echo "COQTEST$(if $(COQ_REF),$(if $(MAKE_REF), [make ref],), [ref diff ignored]) $< (ref: $$REF)" && \
+	  TMPFILE="$$(mktemp)" && \
+	  unset OCAMLRUNPARAM && \
+	  $(TIMER) $(COQ_TEST) $(COQFLAGS) $(COQLIBS) -load-vernac-source $< > "$$TMPFILE" && \
+	  $(if $(COQ_REF),\
+	    $(if $(MAKE_REF),mv "$$TMPFILE" "$$REF",diff --strip-trailing-cr -u "$$REF" "$$TMPFILE"), \
+	    (diff --strip-trailing-cr -u "$$REF" "$$TMPFILE" || true) \
+	  ) && \
+	  rm -f "$$TMPFILE"

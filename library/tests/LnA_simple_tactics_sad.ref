@@ -1,0 +1,129 @@
+"sad_test_con_i"
+     : string
+File "/home/cas/Documents/School/Research_internship/rocq-lna/library/tests/LnA_simple_tactics_sad.v", line 14, characters 13-18:
+The command has indeed failed with message:
+Tactic failure: (the goal is not a conjunction).
+"sad_test_dis_i1"
+     : string
+File "/home/cas/Documents/School/Research_internship/rocq-lna/library/tests/LnA_simple_tactics_sad.v", line 20, characters 13-19:
+The command has indeed failed with message:
+Tactic failure: (the goal is not a disjunction).
+"sad_test_dis_i2"
+     : string
+File "/home/cas/Documents/School/Research_internship/rocq-lna/library/tests/LnA_simple_tactics_sad.v", line 24, characters 13-19:
+The command has indeed failed with message:
+Tactic failure: (the goal is not a disjunction).
+"sad_test_dis_e_H1_exists"
+     : string
+File "/home/cas/Documents/School/Research_internship/rocq-lna/library/tests/LnA_simple_tactics_sad.v", line 30, characters 13-33:
+The command has indeed failed with message:
+Tactic failure: (the label H1 already exists).
+"sad_test_dis_e_H2_exists"
+     : string
+File "/home/cas/Documents/School/Research_internship/rocq-lna/library/tests/LnA_simple_tactics_sad.v", line 34, characters 13-33:
+The command has indeed failed with message:
+Tactic failure: (the label H2 already exists).
+"sad_test_dis_e_not_disjunction"
+     : string
+File "/home/cas/Documents/School/Research_internship/rocq-lna/library/tests/LnA_simple_tactics_sad.v", line 38, characters 8-30:
+The command has indeed failed with message:
+Tactic failure: (the argument is not a disjunction).
+"sad_test_imp_i"
+     : string
+File "/home/cas/Documents/School/Research_internship/rocq-lna/library/tests/LnA_simple_tactics_sad.v", line 44, characters 8-21:
+The command has indeed failed with message:
+Tactic failure: (the goal is not an implication).
+1 goal
+  
+  ============================
+  True
+"sad_test_all_i_xNew_exists"
+     : string
+File "/home/cas/Documents/School/Research_internship/rocq-lna/library/tests/LnA_simple_tactics_sad.v", line 51, characters 13-23:
+The command has indeed failed with message:
+Tactic failure: (the label xNew already exists).
+1 goal
+  
+  xNew : X
+  ============================
+  forall xQuant : X, xQuant = xQuant
+"sad_test_all_i_not_forall"
+     : string
+File "/home/cas/Documents/School/Research_internship/rocq-lna/library/tests/LnA_simple_tactics_sad.v", line 56, characters 8-24:
+The command has indeed failed with message:
+Tactic failure: (the goal is not a universal quantification).
+1 goal
+  
+  ============================
+  True
+"sad_test_all_e_wrong_instance"
+     : string
+File "/home/cas/Documents/School/Research_internship/rocq-lna/library/tests/LnA_simple_tactics_sad.v", line 63, characters 13-44:
+The command has indeed failed with message:
+Tactic failure: (instantiating (X -> True) with x  does not match the goal
+(x = x) ).
+"sad_test_all_e_not_forall"
+     : string
+File "/home/cas/Documents/School/Research_internship/rocq-lna/library/tests/LnA_simple_tactics_sad.v", line 67, characters 8-26:
+The command has indeed failed with message:
+Tactic failure: (the argument is not a universal quantification).
+"sad_test_eqv_i"
+     : string
+File "/home/cas/Documents/School/Research_internship/rocq-lna/library/tests/LnA_simple_tactics_sad.v", line 73, characters 13-18:
+The command has indeed failed with message:
+Tactic failure: (the goal is not an equivalence).
+"sad_test_eqv_e1"
+     : string
+File "/home/cas/Documents/School/Research_internship/rocq-lna/library/tests/LnA_simple_tactics_sad.v", line 79, characters 13-19:
+The command has indeed failed with message:
+Tactic failure: (the goal is not an implication).
+"sad_test_eqv_e2"
+     : string
+File "/home/cas/Documents/School/Research_internship/rocq-lna/library/tests/LnA_simple_tactics_sad.v", line 85, characters 13-19:
+The command has indeed failed with message:
+Tactic failure: (the goal is not an implication).
+"sad_test_iff_i"
+     : string
+File "/home/cas/Documents/School/Research_internship/rocq-lna/library/tests/LnA_simple_tactics_sad.v", line 91, characters 13-24:
+The command has indeed failed with message:
+Tactic failure: (the goal is not a bi-implication).
+"sad_test_LEM"
+     : string
+File "/home/cas/Documents/School/Research_internship/rocq-lna/library/tests/LnA_simple_tactics_sad.v", line 97, characters 13-16:
+The command has indeed failed with message:
+Tactic failure: (the goal is not of the form A \/ ~A).
+1 goal
+  
+  ============================
+  True
+"sad_test_exi_i_wrong_type"
+     : string
+File "/home/cas/Documents/School/Research_internship/rocq-lna/library/tests/LnA_simple_tactics_sad.v", line 104, characters 13-20:
+The command has indeed failed with message:
+Tactic failure: (the type Y of y does not match the type X
+ of the quantifier).
+"sad_test_exi_i_not_exists"
+     : string
+File "/home/cas/Documents/School/Research_internship/rocq-lna/library/tests/LnA_simple_tactics_sad.v", line 112, characters 8-21:
+The command has indeed failed with message:
+Tactic failure: (the goal is not an existential quantification).
+"sad_test_exi_e_H_exists"
+     : string
+File "/home/cas/Documents/School/Research_internship/rocq-lna/library/tests/LnA_simple_tactics_sad.v", line 118, characters 13-58:
+The command has indeed failed with message:
+Tactic failure: (the label H already exists).
+"sad_test_exi_e_xNew_exists"
+     : string
+File "/home/cas/Documents/School/Research_internship/rocq-lna/library/tests/LnA_simple_tactics_sad.v", line 122, characters 13-58:
+The command has indeed failed with message:
+Tactic failure: (the label xNew already exists).
+"sad_test_exi_e_not_exists"
+     : string
+File "/home/cas/Documents/School/Research_internship/rocq-lna/library/tests/LnA_simple_tactics_sad.v", line 126, characters 8-31:
+The command has indeed failed with message:
+Tactic failure: (the argument is not an existential quantification).
+"sad_test_neg_i_not_neg"
+     : string
+File "/home/cas/Documents/School/Research_internship/rocq-lna/library/tests/LnA_simple_tactics_sad.v", line 132, characters 13-22:
+The command has indeed failed with message:
+Tactic failure: (the goal is not a negation).

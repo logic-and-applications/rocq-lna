@@ -155,7 +155,6 @@ Tactic Notation "replace" constr(x) "with" constr(y) :=
 
 (* ------------ intervals ------------ *)
 Definition in_cc (a b c : R) := (b <= a)%R /\ (a <= c)%R.
-
 Definition in_co (a b c : R) := (b <= a)%R /\ (a < c)%R.
 Definition in_oc (a b c : R) := (b < a)%R /\ (a <= c)%R.
 Definition in_oo (a b c : R) := (b < a)%R /\ (a < c)%R.
@@ -214,7 +213,7 @@ end
   Removes all hypotheses that are not singleton linear equations
   eg:
     H0: foo x
-    H1: x > 0 \/ x < 10
+    H1: x > 0 /\ x < 10
     H2: x > 0
     H3: x < 10
   ----------------------
@@ -238,28 +237,35 @@ intros.
   and only hypotheses with singleton equations are used to prove this
 *)
 Tactic Notation "lin_solve" := 
-try (
-  match goal with 
-    | [ |- ?P ] => try (is_singleton_eq P; lin_solve_clear_tactic; lra)
-  end
-  ); 
-fail "(Cannot solve this system)".
+  lazymatch goal with 
+      | [ |- ?P ] => first [
+          is_singleton_eq P
+          | fail 1 "(goal is not a single linear equation)"
+      ]; 
+      lin_solve_clear_tactic;
+      first [
+          lra
+          | fail 1 "(cannot solve this system)"
+      ]
+  end.
 
-(* --------- split_ass ---------- *)
+(* --------- curry_assumptions ---------- *)
 
-Local Ltac split_ass_go :=
+Local Ltac curry_assumptions_go :=
    lazymatch goal with
    | |- _ /\ _ -> _ =>
        let H1 := fresh in
        let H2 := fresh in
-       intros [H1 H2]; revert H2; split_ass_go; revert H1
+       intros [H1 H2]; revert H2; curry_assumptions_go; revert H1
    | |- _ => idtac
    end.
 
-Tactic Notation "split_ass" :=
+Tactic Notation "curry_assumptions" :=
    lazymatch goal with
-   | |- _ /\ _ -> _ => split_ass_go
-   | |- _ => fail "(goal is not of the proper form)"
+   | |- _ /\ _ -> _ => curry_assumptions_go
+   | |- _ => fail "(the goal is not of the proper form)"
    end.
+
+Tactic Notation "test" := idtac.
 
 Open Scope R_scope.
