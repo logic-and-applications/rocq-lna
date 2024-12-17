@@ -2,8 +2,10 @@ name: Run tests
 
 on:
   push:
+    branches:
+      - "*"
     paths:
-      - library/**"
+      - "library/**"
 
 jobs:
   test-LnA:
