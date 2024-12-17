@@ -6,7 +6,7 @@ on:
       - "*"
 
 jobs:
-  test:
+  test-LnA:
     runs-on: ubuntu-latest
 
     steps:
@@ -20,12 +20,16 @@ jobs:
           opam init --disable-sandboxing -y  # Initialize opam (disable sandboxing to avoid some issues)
           eval $(opam env)  # Configure the environment for opam
 
-      - name: Install LnA
+      - name: Install coqtop
         run: |
+          eval $(opam env)
           cd library
-          opam pin add . -y
+          opam install coq -y
 
-      - name: Run Makefile.local.test
+      - name: make LnA and run tests
         run: |
+          eval $(opam env)
           cd library
+          make
+          make install
           make -f Makefile.local.test
