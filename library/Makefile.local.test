@@ -9,6 +9,9 @@ COQ_REF=1
 # the test suite
 TESTFILES:=$(shell find tests -name "*.v")
 
+# removes file-specific output
+NORMALIZER:=test-normalizer.sed
+
 test: $(TESTFILES:.v=.vo)
 .PHONY: test
 
@@ -34,6 +37,8 @@ $(TESTFILES:.v=.vo): %.vo: %.v $(if $(MAKE_REF),,%.ref)
 	  TMPFILE="$$(mktemp)" && \
 	  unset OCAMLRUNPARAM && \
 	  $(TIMER) $(COQ_TEST) $(COQFLAGS) $(COQLIBS) -load-vernac-source $< > "$$TMPFILE" && \
+	  sed -E -f $(NORMALIZER) "$$TMPFILE" > "$$TMPFILE".new && \
+	  mv "$$TMPFILE".new "$$TMPFILE" && \
 	  $(if $(COQ_REF),\
 	    $(if $(MAKE_REF),mv "$$TMPFILE" "$$REF",diff --strip-trailing-cr -u "$$REF" "$$TMPFILE"), \
 	    (diff --strip-trailing-cr -u "$$REF" "$$TMPFILE" || true) \
