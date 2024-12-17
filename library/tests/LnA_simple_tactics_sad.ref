@@ -22,7 +22,7 @@ Tactic failure: (the label H2 already exists).
      : string
 The command has indeed failed with message:
 Tactic failure: (the argument is not a disjunction).
-"sad_test_imp_i"
+"sad_test_imp_i_not_imp_generic"
      : string
 The command has indeed failed with message:
 Tactic failure: (the goal is not an implication).
@@ -30,6 +30,14 @@ Tactic failure: (the goal is not an implication).
   
   ============================
   True
+"sad_test_imp_i_not_imp_forall"
+     : string
+The command has indeed failed with message:
+Tactic failure: (the goal is not an implication).
+1 goal
+  
+  ============================
+  forall x0 : X, x0 = x0
 "sad_test_all_i_xNew_exists"
      : string
 The command has indeed failed with message:
@@ -39,7 +47,7 @@ Tactic failure: (the label xNew already exists).
   xNew : X
   ============================
   forall xQuant : X, xQuant = xQuant
-"sad_test_all_i_not_forall"
+"sad_test_all_i_not_forall_generic"
      : string
 The command has indeed failed with message:
 Tactic failure: (the goal is not a universal quantification).
@@ -47,6 +55,14 @@ Tactic failure: (the goal is not a universal quantification).
   
   ============================
   True
+"sad_test_all_i_not_forall_imp"
+     : string
+The command has indeed failed with message:
+Tactic failure: (the goal is not a universal quantification).
+1 goal
+  
+  ============================
+  a -> b
 "sad_test_all_e_wrong_instance"
      : string
 The command has indeed failed with message:

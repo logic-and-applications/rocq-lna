@@ -39,8 +39,13 @@ Section test_dis_e.
     Abort.
 End test_dis_e.
 Section test_imp_i.
-    Check "sad_test_imp_i".
-    Lemma sad_test_imp_i : True.
+    Check "sad_test_imp_i_not_imp_generic".
+    Lemma sad_test_imp_i_not_imp_generic : True.
+        Fail imp_i H.
+        Show.
+    Abort.
+    Check "sad_test_imp_i_not_imp_forall".
+    Lemma sad_test_imp_i_not_imp_forall : forall x:X, x=x.
         Fail imp_i H.
         Show.
     Abort.
@@ -51,8 +56,13 @@ Section test_all_i.
         Fail all_i xNew.
         Show.
     Abort.
-    Check "sad_test_all_i_not_forall".
-    Lemma sad_test_all_i_not_forall : True.
+    Check "sad_test_all_i_not_forall_generic".
+    Lemma sad_test_all_i_not_forall_generic : True.
+        Fail all_i xNew.
+        Show.
+    Abort.
+    Check "sad_test_all_i_not_forall_imp".
+    Lemma sad_test_all_i_not_forall_imp : a -> b.
         Fail all_i xNew.
         Show.
     Abort.
