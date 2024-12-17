@@ -11,16 +11,16 @@ This LA library is based on two files used for Proofweb called BenB and BenB2, u
 - helper tactics for changed `lin_solve`:
   - `is_singleton_eq` which fails terms that are not singleton linear equations
   - `lin_solve_remove_hyps` which removes all hypotheses that are not singleton linear equations
-- a helper tactic for `splitAss` (now `split_ass`) called `split_ass_go`
+- a helper tactic for `splitAss` (now `curry_assumptions`) called `curry_assumptions_go`
 - a test file called `tests.v` which tests tactic implementations
 
 ### Changed
 
-- Renamed `splitAss` to `split_ass`.
+- Renamed `splitAss` to `curry_assumptions`.
 - Made all Ltac tactics use Tactic Notation if possible (no use of recursion)
 - definition of lin_solve to no longer use deprecated fourier.
   - to match desired behaviour, only hypotheses that are singleton linear expressions are used and similarly the goal must be a singleton linear expression
-- definition of split_ass, stru_ihould work for any depth now
+- definition of curry_assumptions, stru_ihould work for any depth now
 - `interval` tactic fails with appropriate error message on non-interval goals
 - Some following tactics no make use of now removed unused tacticsi no
 
