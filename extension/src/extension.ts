@@ -1,7 +1,12 @@
 import { ErrorCodes } from 'vscode-languageclient';
 import allowLists, { pragma, pragmas } from './tactics';
 import { DocumentProofsResponse, ProofBlock, VscoqExport } from './types';
-import { DecorationOptions, Extension, extensions, Location, Position, Range, TextDocument, TextDocumentChangeEvent, TextEditor, window, workspace } from 'vscode';
+import { DecorationOptions, Extension, extensions, Location, Position, Range, TextDocument, TextDocumentChangeEvent, TextEditor, Uri, window, workspace } from 'vscode';
+
+// The delay of waiting after each change before updating the decorations
+const UPDATE_DELAY_MS = 300;
+// The delay of waiting before retrying the server after a busy signal
+const SERVER_CANCEL_DELAY_MS = 500;
 
 const decoration = window.createTextEditorDecorationType({
 	textDecoration: 'underline wavy #ff0000'
@@ -52,7 +57,7 @@ function getPragmaData(proofBlock: ProofBlock, editor: TextDocument): PragmaData
 	return { pragma: "default" };
 }
 
-function isBeforePragma(pragmaData: PragmaData, proofLine: number) {
+function isBeforePragma(pragmaData: PragmaData, proofLine: number): boolean {
 	return !!pragmaData.range && pragmaData.range.end.line >= proofLine;
 }
 
@@ -63,11 +68,11 @@ function createDecoration(range: Range, tacticName: string, pragma: string): Dec
 	};
 }
 
-function createBlockDecorations(proofBlock: ProofBlock, editor: TextDocument) {
+function createBlockDecorations(proofBlock: ProofBlock, editor: TextDocument): DecorationOptions[] {
 	const pragmaData = getPragmaData(proofBlock, editor);
 
 	let allowList = allowLists[pragmaData.pragma];
-	const decorations = [];
+	const decorations: DecorationOptions[] = [];
 
 	for (let { tactic, range } of proofBlock.steps) {
 		if (isBeforePragma(pragmaData, range.start.line)) {
@@ -92,33 +97,47 @@ function applyDecorations(decorations: DecorationOptions[]) {
 }
 
 // fire decoration update using a small delay
-function triggerUpdateDecorations(document: TextDocument, delay = 200) {
+function triggerUpdateDecorations(document: TextDocument, delay = UPDATE_DELAY_MS) {
 	if (timeout) {
 		clearTimeout(timeout);
 	}
 	timeout = setTimeout(() => updateDecorations(document), delay);
 }
 
+export async function createDocumentDecorations(document: TextDocument): Promise<DecorationOptions[] | undefined> {
+
+	const documentProofs = await vscoq?.exports.getDocumentProofs(document.uri);
+
+	if (!documentProofs) { return; }
+
+	const decorations = documentProofs.proofs.flatMap((proofBlock) => {
+
+		// make proofBlock.range an actual range, not just an object
+		proofBlock.range = new Range(proofBlock.range.start, proofBlock.range.end);
+
+		return createBlockDecorations(proofBlock, document);
+	});
+
+	return decorations;
+
+}
+
 async function updateDecorations(document: TextDocument) {
 	if (!window.activeTextEditor) { return; }
+
 	try {
-		const documentProofs = await vscoq?.exports.getDocumentProofs(document.uri);
+		const decorations = await createDocumentDecorations(document);
 
-		if (!documentProofs) { return; }
-
-		const decorations = documentProofs.proofs.flatMap((proofBlock) => {
-			// make proofBlock.range an actual range, not just an object
-			proofBlock.range = new Range(proofBlock.range.start, proofBlock.range.end);
-			return createBlockDecorations(proofBlock, document);
-		});
+		if (!decorations) { return; }
 
 		applyDecorations(decorations);
 	} catch (e) {
 		const ServerCancelledCode = -32802;
 		if (e && typeof e === "object" && "code" in e && e.code === ServerCancelledCode) {
-			triggerUpdateDecorations(document, 400);
+			triggerUpdateDecorations(document, SERVER_CANCEL_DELAY_MS);
 		}
 	}
+
 }
 
 let vscoq: Extension<VscoqExport> | undefined;
