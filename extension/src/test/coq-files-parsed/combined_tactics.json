@@ -1,0 +1,148 @@
+{
+  "proofs": [
+    {
+      "statement": {
+        "statement": "Lemma combined_tactics4: A -> A -> A.",
+        "range": {
+          "end": { "character": 37, "line": 19 },
+          "start": { "character": 0, "line": 19 }
+        }
+      },
+      "range": {
+        "end": { "character": 4, "line": 22 },
+        "start": { "character": 0, "line": 20 }
+      },
+      "steps": [
+        {
+          "tactic": "Proof.",
+          "range": {
+            "end": { "character": 6, "line": 20 },
+            "start": { "character": 0, "line": 20 }
+          }
+        },
+        {
+          "tactic": "intros; pose proof H; tauto.",
+          "range": {
+            "end": { "character": 28, "line": 21 },
+            "start": { "character": 0, "line": 21 }
+          }
+        },
+        {
+          "tactic": "Qed.",
+          "range": {
+            "end": { "character": 4, "line": 22 },
+            "start": { "character": 0, "line": 22 }
+          }
+        }
+      ]
+    },
+    {
+      "statement": {
+        "statement": "Lemma combined_tactics3: A -> A -> A.",
+        "range": {
+          "end": { "character": 37, "line": 14 },
+          "start": { "character": 0, "line": 14 }
+        }
+      },
+      "range": {
+        "end": { "character": 4, "line": 17 },
+        "start": { "character": 0, "line": 15 }
+      },
+      "steps": [
+        {
+          "tactic": "Proof.",
+          "range": {
+            "end": { "character": 6, "line": 15 },
+            "start": { "character": 0, "line": 15 }
+          }
+        },
+        {
+          "tactic": "imp_i H1; imp_i H2; tauto.",
+          "range": {
+            "end": { "character": 26, "line": 16 },
+            "start": { "character": 0, "line": 16 }
+          }
+        },
+        {
+          "tactic": "Qed.",
+          "range": {
+            "end": { "character": 4, "line": 17 },
+            "start": { "character": 0, "line": 17 }
+          }
+        }
+      ]
+    },
+    {
+      "statement": {
+        "statement": "Lemma combined_tactics2: A -> A -> A.",
+        "range": {
+          "end": { "character": 37, "line": 9 },
+          "start": { "character": 0, "line": 9 }
+        }
+      },
+      "range": {
+        "end": { "character": 4, "line": 12 },
+        "start": { "character": 0, "line": 10 }
+      },
+      "steps": [
+        {
+          "tactic": "Proof.",
+          "range": {
+            "end": { "character": 6, "line": 10 },
+            "start": { "character": 0, "line": 10 }
+          }
+        },
+        {
+          "tactic": "imp_i H1; intros H2; hyp H2.",
+          "range": {
+            "end": { "character": 28, "line": 11 },
+            "start": { "character": 0, "line": 11 }
+          }
+        },
+        {
+          "tactic": "Qed.",
+          "range": {
+            "end": { "character": 4, "line": 12 },
+            "start": { "character": 0, "line": 12 }
+          }
+        }
+      ]
+    },
+    {
+      "statement": {
+        "statement": "Lemma combined_tactics1: A -> A -> A.",
+        "range": {
+          "end": { "character": 37, "line": 4 },
+          "start": { "character": 0, "line": 4 }
+        }
+      },
+      "range": {
+        "end": { "character": 4, "line": 7 },
+        "start": { "character": 0, "line": 5 }
+      },
+      "steps": [
+        {
+          "tactic": "Proof.",
+          "range": {
+            "end": { "character": 6, "line": 5 },
+            "start": { "character": 0, "line": 5 }
+          }
+        },
+        {
+          "tactic": "intros H1; imp_i H2; hyp H1.",
+          "range": {
+            "end": { "character": 28, "line": 6 },
+            "start": { "character": 0, "line": 6 }
+          }
+        },
+        {
+          "tactic": "Qed.",
+          "range": {
+            "end": { "character": 4, "line": 7 },
+            "start": { "character": 0, "line": 7 }
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -64,7 +64,7 @@ function isBeforePragma(pragmaData: PragmaData, proofLine: number): boolean {
 function createDecoration(range: Range, tacticName: string, pragma: string): DecorationOptions {
 	return {
 		range: range,
-		hoverMessage: `tactic ${tacticName.replace(".", "")} is not allowed for ${pragma} proofs	.`,
+		hoverMessage: `tactic ${tacticName.replace(".", "")} is not allowed for ${pragma} proofs.`,
 	};
 }
 
@@ -93,7 +93,20 @@ function createBlockDecorations(proofBlock: ProofBlock, editor: TextDocument): D
 }
 
 function applyDecorations(decorations: DecorationOptions[]) {
+	log.appendLine(`Applied decoratins:\n ${JSON.stringify(decorations)}`);
 	window.activeTextEditor?.setDecorations(decoration, decorations);
+}
+
+export async function createDocumentDecorations(documentProofs: DocumentProofsResponse, document: TextDocument): Promise<DecorationOptions[] | undefined> {
+	const decorations = documentProofs.proofs.flatMap((proofBlock) => {
+
+		// make proofBlock.range an actual range, not just an object
+		proofBlock.range = new Range(proofBlock.range.start, proofBlock.range.end);
+
+		return createBlockDecorations(proofBlock, document);
+	});
+
+	return decorations;
 }
 
 // fire decoration update using a small delay
@@ -104,29 +117,16 @@ function triggerUpdateDecorations(document: TextDocument, delay = UPDATE_DELAY_M
 	timeout = setTimeout(() => updateDecorations(document), delay);
 }
 
-export async function createDocumentDecorations(document: TextDocument): Promise<DecorationOptions[] | undefined> {
-
-	const documentProofs = await vscoq?.exports.getDocumentProofs(document.uri);
-
-	if (!documentProofs) { return; }
-
-	const decorations = documentProofs.proofs.flatMap((proofBlock) => {
-
-		// make proofBlock.range an actual range, not just an object
-		proofBlock.range = new Range(proofBlock.range.start, proofBlock.range.end);
-
-		return createBlockDecorations(proofBlock, document);
-	});
-
-	return decorations;
-
-}
-
 async function updateDecorations(document: TextDocument) {
 	if (!window.activeTextEditor) { return; }
 
 	try {
-		const decorations = await createDocumentDecorations(document);
+
+		const documentProofs = await vscoq?.exports.getDocumentProofs(document.uri);
+
+		if (!documentProofs) { return; }
+
+		const decorations = await createDocumentDecorations(documentProofs, document);
 
 		if (!decorations) { return; }
 
@@ -144,7 +144,7 @@ let vscoq: Extension<VscoqExport> | undefined;
 const log = window.createOutputChannel('rocq-lna');
 export function activate() {
 	vscoq = extensions.getExtension('maximedenes.vscoq');
-	log.appendLine("Extension activated !");
+	log.appendLine("Extension activated");
 
 	window.onDidChangeActiveTextEditor(editor => {
 		log.appendLine("Active editor changed");

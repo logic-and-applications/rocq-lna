@@ -1,0 +1,9 @@
+[
+  {
+    "range": [
+      { "line": 6, "character": 0 },
+      { "line": 6, "character": 8 }
+    ],
+    "hoverMessage": "tactic intros is not allowed for default proofs."
+  }
+]

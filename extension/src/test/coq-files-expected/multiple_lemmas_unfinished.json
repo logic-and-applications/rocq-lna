@@ -1,0 +1,23 @@
+[
+  {
+    "range": [
+      { "line": 20, "character": 0 },
+      { "line": 20, "character": 8 }
+    ],
+    "hoverMessage": "tactic intros is not allowed for benbta_proof proofs."
+  },
+  {
+    "range": [
+      { "line": 11, "character": 0 },
+      { "line": 11, "character": 8 }
+    ],
+    "hoverMessage": "tactic intros is not allowed for default proofs."
+  },
+  {
+    "range": [
+      { "line": 6, "character": 0 },
+      { "line": 6, "character": 8 }
+    ],
+    "hoverMessage": "tactic intros is not allowed for default proofs."
+  }
+]
