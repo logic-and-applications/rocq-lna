@@ -1,43 +1,90 @@
-## Configuring custom packages
+## How to change the Rocq/Coq versions
 
-This configuration file specifies which packages should be installed and the default selection.
-Each package to be added needs the following properties:
+The [`release_builder.yml`] workflow contains a job called `build-windows-installer`. Under this job look for `strategy > matrix`. Here we define an environment variable. The environment variable `coq-platform-pick` refers to the name of a [`package_pick`] file in [Coq Platform]. These files are collections of versions of coq and their matching libraries. For example, to change the version of Rocq/Coq to 8.20, look for the [`package_pick`] file containing 8.20. The end of that file name from the version number should then be set as this environment variable. In the case of coq version 8.20, this becomes `8.20~2025.01`.
 
-- The source type of the package. Specified by one of OPAM, GITHUB and LOCAL. Read next sections for clarification for each of these
-- The name of the package which to be displayed in the installer
-- Whether or not the package should be selected in the installer by default. Specified by either SELECTED or UNSELECTED
+Additionally, update the `depends` property in [LnA.opam](/library/LnA.opam). Ensure locally that the version of `vscoq-language-server` works well with this new version of Coq/Rocq. If it does not, ensure that our own extension still works with the version of `vscoq-language-server` that is supported and update both this opam file and possibly the extension.
 
-## Existing opam packages
+Once everything is ready, you can either run the workflow manually or preferably create a tagged commit containing a version number. Do this by running the following script with the new release version number (e.g., `v1.0.0` instead of `<version tag>`).
 
-For existing Opam packages, the display name should be the name as **registered in opam**.
+```shell
+git tag <version tag>
+git push origin <version tag>
+```
 
-example:
+This tag must be of the form `v*.*.*` or the workflow will not trigger. Once this workflow is complete, it will have created 3 artifacts, which will be visible in the `Actions` tab on github. It will also have created a new [Release](https://github.com/logic-and-applications/rocq-lna/releases), containing these artifacts.
 
-`OPAM 'coq-serapi' SELECTED`
+## Explanation of building the windows installer
 
-`OPAM 'vscoq-language-server' SELECTED `
+The [`release_builder.yml`] workflow contains a job called `build-windows-installer`.
 
-### Custom Github packages
+In short, this job uses [Coq Platform] to installs [cygwin](https://cygwin.com/) to emulate a unix-like environment. On this environment it and we then install all our coq libraries. After the everything is installed, it creates a windows installer from this environment.
 
-In addition to the standard properties, custom Github packages require the following properties needs to be specified
+More specifically, the steps of this job do the following:
 
-- relative package location: the path location in windows format relative to the Opam switch
-- package description: description shown in installer
-- Github owner: repository owner
-- Github repository: name of repository
+1. **Set git to use LF**:
 
-example:
+   Ensures all files retrieved by future checkouts in this job use unix-style newline characters (`\n`, instead of `\r\n`). This is required for running custom scripts in the cygwin shell.
 
-`GITHUB 'zfc' UNSELECTED 'lib/coq/user-contrib/ZFC' 'An encoding of Zermelo-Fraenkel Set Theory in Coq' 'coq-contribs' 'zfc'`
+2. **Git checkout install scripts**:
 
-### Custom Local packages
+   Retrieves this git repository and stores it under the `/main` subdirectory.
 
-For custom local packages already on the device (for example in case of a mono repo), the following additional properties needs to be specified:
+3. **Git checkout coq platform**:
 
-- relative package location: the path location in windows format relative to the Opam switch
-- package description: description shown in installer
-- path to local makefile
+   Retrieves the entire [Coq Platform] repository and stores it under the `/platform` repository
 
-example:
+4. **Set switch name in coq platform**:
 
-`LOCAL 'LnA' SELECTED 'lib/coq/user-contrib/LnA' 'A libary used for Radboud University CS course Logic and Applications' '/platform/LnA'`
+   Modifies the [`coq_platform_switch_name.sh`](https://github.com/coq/platform/blob/main/package_picks/coq_platform_switch_name.sh) file to change the coq switch name from a generic coq platform switch to our switch name `LnA`.
+
+   We have to modify the file this way, as it will be used by coq platform scripts later by `platform/coq_platform_make_windows.bat`.
+
+5. **Set default install directory**:
+
+   Modifies the `platform/windows/Coq.nsi` to change the default installation directory seen in the final installer to `C:\cygwin_LnA\home\runneradmin\.opam\\\LnA`. This matches the installation directory created by running `platform/coq_platform_make_windows.bat`.
+
+   Specifically, `runneradmin` is the user name of the github actions environment, `cygwin_LnA` is the cygwin directory we will give to coq platform and `LnA` is the switch name.
+
+   The `platform/windows/Coq.nsi` file is used by the `platform/windows/create_installer_windows.sh` script.
+
+6. **Run coq platform make windows**:
+
+   runs the `platform/coq_platform_make_windows.bat` script to first install cygwin, and then a few libraries. The arguments given do the following:
+
+   - `-destcyg=C:\cygwin_LnA`: Sets the directory cygwin will be installed in.
+   - `-arch=64`: The architecture to build for. It is hardcoded to be 64, as it is the only architecture that is still supported by the most recent versions of coq platform.
+   - `-extent=i`: The set of coq libraries to install. `-i` installs `coq`, `coqide` and and their dependencies. There is a more minimal flag, `x`, but at the time of writing this crashes the script. Additionally, the icon from coqide is used by the `windows/create_installer_windows.sh` script. It is possible to modify this script to not use this. If you remove both the lines copying `source/coqide/ide/coqide/coq.ico` from `windows/create_installer_windows.sh` and also all references to coqide in `Coq.nsi`, it should simply start to use the default icon for [nsis] installers. This should be done to the files in the cygwin directory after installation, however. Look at the [`patch_installer.sh`] script to see a similar example.
+   - `-pick`: The [`package_pick`] file to load. Essentially this picks the version of Rocq/Coq to install.
+   - `-set-switch=y`: answers 'y' to all questions asked during the process
+   - `-compcert=n`: Tells coq platform not to build compcert.
+   - `-parallel=p`: Allow parallelization during installation.
+   - `-jobs=2`: Amount of jobs for parallelization.
+   - `-vst=n`: Tells coq platform not to build Verified Software Toolchain
+
+7. **Patch installer**:
+
+   Patches the `windows/create_installer_windows.sh` file in the cygwin directory by copying `installer/patch_installer.sh` to that directory and running it. The `create_installer _windows` script assumes `-compcert=y` was set during the previous step and this fixes it. If, in the future, other patches need to be made, this is probably the place to add those patches.
+
+8. **Install LnA**:
+
+   Installs our library and all its dependencies on the cygwin directory such that they are added to the installer in the next step. The `depends` field in the [`LnA.opam`](/library/LnA.opam) file configures what the dependencies are that are installed along with it. This process already installed Rocq/Coq, so that it skipped. `vscoq-language-server`, however, is installed because of the dependency in this step.
+
+9. **Create installer**:
+
+   Creates the installer by running `windows/create_installer_windows.sh` in the cygwin directory. Once this is done it is copied to `/installer/`, which is a location more easily accessible for next steps.
+
+10. **Sign the installer**:
+
+    This step is currently commented out, but is an example of how to sign the installer once we obtain a certificate. This certificate must, of course, not be pushed to this repository. The `secrets` environment variables can instead be set by the repository owner under `Settings > Security > Secrets and variables > Actions`.
+
+11. **Upload Artifact**:
+
+    Uploads the installer under the name `LnA-Windows-installer` to github as an artifact. Once this step is complete it will show up in github under the `Actions` tab by navigating to this workflow and scrolling down to `Artifacts` at the bottom of the page. This step also makes it possible to use in later actions, which we do in the `release` job. The `release` job is only allowed to start after this job is finished, because it is one of the jobs in the `needs` list seen in the `release` job.
+
+<!-- Links -->
+
+[Coq Platform]: https://github.com/coq/platform
+[nsis]: https://nsis.sourceforge.io/Main_Page
+[`patch_installer.sh`]: /installer/patch_installer.sh
+[`package_pick`]: https://github.com/coq/platform/tree/main/package_picks
+[`release_builder.yml`]: /.github/workflows//release_builder.yml
