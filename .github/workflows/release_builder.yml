@@ -168,14 +168,8 @@ jobs:
           name: library-archive
           path: ./release-assets
 
-      - name: Install GitHub CLI
-        run: sudo apt-get install gh
-
       - name: Create GitHub Release
-        env:
-          TAG_NAME: ${{ github.ref_name }}
-        run: |
-          gh release create $TAG_NAME \
-            ./release-assets/* \
-            --title "Release $TAG_NAME" \
-            --draft
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ./release-assets/*
+          draft: true
