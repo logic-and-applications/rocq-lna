@@ -41,10 +41,11 @@ This guide is written to use [Visual Studio Code] (VS Code) as an editor. If you
 
         etc.
 
-     3. Download and install our custom LnA library through opam by running
+     3. Download and install our custom LnA library and its dependencies through opam by running:
         ```shell
-        opam pin add -y LnA https://github.com/logic-and-applications/rocq-lna/releases/download/v0.0.1/LnA-0.0.1.tar.gz
+        opam pin add -y https://github.com/logic-and-applications/rocq-lna/releases/download/v0.0.1/LnA-0.0.1.tar.gz
         ```
+        the `-y` flag answers `yes` to the question if the versions to install are correct (and all other questions that may arise)
 
 4. Install the [`vscoq`] extension.
 
