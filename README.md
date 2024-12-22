@@ -12,7 +12,7 @@ The custom Rocq package is simply called LnA. It provides a set of tactics which
 
 The custom VS Code extension is build to provide immediate feedback on which tactics are used when they are not supposed to be. It uses special comment blocks, like `(*! benbta_proof *)`, to distinguish which set of tactics should be allowed.
 
-It is an offline extension with no reference to an original document, so be careful not to change these comment blocks or the premise of a `Lemma` or `Theorem`. Doing this will not cause the extension to create a warning or error in VS Code, but it will be caught by ProofWeb when handing it in. You can always check in ProofWeb if the final result is valid by clicking `File > Load` and looking for the icon in front of the task. An orange flag (<span style="font-family: 'Glyphicons Halflings'; color: #8a6d3b"></span>) in front of the task means tactics were used that are not allowed. You can inspect which tactics and where by clicking on the question mark (<span style="font-family: 'Glyphicons Halflings'"></span>) button after the task.
+It is an offline extension with no reference to an original document, so be careful not to change these comment blocks or the premise of a `Lemma` or `Theorem`. Doing this will not cause the extension to create a warning or error in VS Code, but it will be caught by ProofWeb when handing it in. You can always check in ProofWeb if the final result is valid by clicking `File > Load` and looking for the icon in front of the task. An orange flag in front of the task means tactics were used that are not allowed. You can inspect which tactics and where by clicking on the question mark button after the task.
 
 # Installation guide
 
