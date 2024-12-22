@@ -90,7 +90,7 @@ This guide is written to use [Visual Studio Code] (VS Code) as an editor. If you
    2. Add this path to the `path` setting of `vscoq` (press ctrl+shift+P in VS Code and type "User Settings (JSON)", then hit Enter). Saving this file will save the setting.
       ```json
       {
-         "vscoq.path": "C:\\cygwin_LnA\\home\\runneradmin\\.opam\\LnA\\bin\\vscoqtop"
+         "vscoq.path": "C:\\cygwin_LnA\\home\\runneradmin\\.opam\\LnA\\bin\\vscoqtop.exe"
          ...there may be other options
       }
       ```
@@ -106,7 +106,7 @@ This guide is written to use [Visual Studio Code] (VS Code) as an editor. If you
       code --install-extension LnA-vscode-extension-0.0.1.vsix
       ```
 
-If everything worked, you should now be able to download or open [this test file](https://github.com/logic-and-applications/rocq-lna/blob/main/extension/src/test/coq-files/benbta_yes_tauto.v) and step through the file using `Alt+DownArrow`, or to the cursor using `Alt+RightArrow`. A second window should open to the right, and it should look similar to the following image:
+If everything worked, you should now be able to download or copy [the test file] in a [trusted workspace](https://code.visualstudio.com/docs/editor/workspace-trust) to enable extensions. Open the file and step through the file using `Alt+DownArrow`, or to the cursor using `Alt+RightArrow`. A second window should open to the right, and it should look similar to the following image:
 
 ![An example of a correctly running vscoq installation](/images/running-vscoq.png)
 
@@ -132,13 +132,26 @@ Windows users can download our custom installer from our [latest release] page. 
    ![DO NOT CHANGE THE INSTALLATION DIRECTORY!](images/do-not-change-the-installation-directory.png)
 5. Continue with step 4 from the [Installation Guide](#installation-guide).
 
-<!-- Links -->
+## Troubleshooting
+
+### If coq files are highlighted, but the `Coq Goals` screen does not appear
+
+This can have multiple causes.
+
+- Check the if the `vscoq.path` setting is a valid path to the `vscoqtop` file. To find the settings you can search for VsCoq in the left activity bar, then click the little `manage` gear and click on Settings. The path to your `vscoqtop` should be displayed in the `VsCoq: Path` setting. Changing this path will only take effect after fully closing and re-opening VS Code.
+- VsCoq does not work with invalid Rocq file names, so check that the file name is a valid Rocq file name. Rocq file names must end in `.v` and cannot have special characters other than `-`.
+
+### The `intros` tactic in the test file is not highlighted red
+
+Check first if both the `LnA-vscode-extension` and the `VsCoq` extensions visible in the `Extensions` tab on the left Activity Bar. If they are and VsCoq is functioning, see if the file you are using matches [the test file] exactly, and the `intros` tactic is not above the `(*! benbta_proof *)` comment, as that will disable the check. Finally, fully closing and re-opening VS Code might fix the problem.
 
 ## Installing custom packages
 
 You may find that you want to explore Rocq's capabilities beyond the scope of this course. If you do, here are some instructions of how to install additional packages that are not used in this course. If you do, here is some help on how to do that if you installed Rocq using our instructions:
 
 ### Installing custom packages after having used the Windows installer
+
+_We are still working on a way to do this_
 
 ### Installing custom packages with `opam`
 
@@ -154,9 +167,14 @@ This will make a [large collection](https://github.com/coq/opam/tree/master/rele
 opam install coq-iris
 ```
 
+Packages that are not available through this repository will either likely provide their own instructions or you will have to install the package the same way we did with the LnA package, with `opam pin add <archive/github link of package>`.
+
+<!-- Links -->
+
 [Visual Studio Code]: https://code.visualstudio.com/download
 [VSCodium]: https://github.com/VSCodium/vscodium/releases
 [`vscoq`]: https://marketplace.visualstudio.com/items?itemName=maximedenes.vscoq
 [latest release]: https://github.com/logic-and-applications/rocq-lna/releases/latest
 [`opam`]: https://opam.ocaml.org/doc/Install.html
 [`coq-iris`]: https://gitlab.mpi-sws.org/iris/iris
+[the test file]: https://github.com/logic-and-applications/rocq-lna/blob/main/extension/src/test/coq-files/benbta_yes_tauto.v
