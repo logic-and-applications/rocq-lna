@@ -106,7 +106,7 @@ This guide is written to use [Visual Studio Code] (VS Code) as an editor. If you
       code --install-extension LnA-vscode-extension-0.0.1.vsix
       ```
 
-If everything worked, you should now be able to open one of our exercises and step through the file using `Alt+DownArrow`, or to the cursor using `Alt+RightArrow`. A second window should open to the right, and it should look similar to the following image:
+If everything worked, you should now be able to download or open [this test file](https://github.com/logic-and-applications/rocq-lna/blob/main/extension/src/test/coq-files/benbta_yes_tauto.v) and step through the file using `Alt+DownArrow`, or to the cursor using `Alt+RightArrow`. A second window should open to the right, and it should look similar to the following image:
 
 ![An example of a correctly running vscoq installation](/images/running-vscoq.png)
 
@@ -134,8 +134,29 @@ Windows users can download our custom installer from our [latest release] page. 
 
 <!-- Links -->
 
+## Installing custom packages
+
+You may find that you want to explore Rocq's capabilities beyond the scope of this course. If you do, here are some instructions of how to install additional packages that are not used in this course. If you do, here is some help on how to do that if you installed Rocq using our instructions:
+
+### Installing custom packages after having used the Windows installer
+
+### Installing custom packages with `opam`
+
+If you used `opam` to install the LnA package, you can similarly install other packages the same way, or by using `opam install`. Suppose you want to install the [`coq-iris`] package. If you do this for the first time, you will need to add the Coq opam repository first:
+
+```shell
+opam repo add coq-released https://coq.inria.fr/opam/released
+```
+
+This will make a [large collection](https://github.com/coq/opam/tree/master/released/packages) of coq packages available to install. Next you can install the package by running
+
+```shell
+opam install coq-iris
+```
+
 [Visual Studio Code]: https://code.visualstudio.com/download
 [VSCodium]: https://github.com/VSCodium/vscodium/releases
 [`vscoq`]: https://marketplace.visualstudio.com/items?itemName=maximedenes.vscoq
 [latest release]: https://github.com/logic-and-applications/rocq-lna/releases/latest
 [`opam`]: https://opam.ocaml.org/doc/Install.html
+[`coq-iris`]: https://gitlab.mpi-sws.org/iris/iris

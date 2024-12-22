@@ -93,7 +93,7 @@ function createBlockDecorations(proofBlock: ProofBlock, editor: TextDocument): D
 }
 
 function applyDecorations(decorations: DecorationOptions[]) {
-	log.appendLine(`Applied decoratins:\n ${JSON.stringify(decorations)}`);
+	log.appendLine(`Applied decorations:\n ${JSON.stringify(decorations)}`);
 	window.activeTextEditor?.setDecorations(decoration, decorations);
 }
 
@@ -125,6 +125,8 @@ async function updateDecorations(document: TextDocument) {
 		const documentProofs = await vscoq?.exports.getDocumentProofs(document.uri);
 
 		if (!documentProofs) { return; }
+
+		log.appendLine(`Received parsed file:\n ${JSON.stringify(documentProofs)}`);
 
 		const decorations = await createDocumentDecorations(documentProofs, document);
 
