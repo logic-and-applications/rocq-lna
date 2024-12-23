@@ -6,11 +6,11 @@ Rocq-LnA provides 2 features to achieve this, a Rocq library and a Visual Studio
 
 ### LnA package
 
-The custom Rocq package is simply called LnA. It provides a set of tactics which are made to match as closely as possible to the logical rules as taught in the course. During the course, tasks will allow or disallow only a specific subset of this set.
+The custom Rocq package is simply called LnA. It provides a set of tactics which are made to match the logical rules taught in the course as closely as possible. During the course, tasks will allow or disallow only a specific subset of this set.
 
 ### LnA-vscode-extension
 
-The custom VS Code extension is build to provide immediate feedback on which tactics are used when they are not supposed to be. It uses special comment blocks, like `(*! benbta_proof *)`, to distinguish which set of tactics should be allowed.
+The custom VS Code extension is built to provide immediate feedback on which tactics are used when they are not supposed to be. It uses special comment blocks, like `(*! benbta_proof *)`, to distinguish which set of tactics should be allowed.
 
 It is an offline extension with no reference to an original document, so be careful not to change these comment blocks or the premise of a `Lemma` or `Theorem`. Doing this will not cause the extension to create a warning or error in VS Code, but it will be caught by ProofWeb when handing it in. You can always check in ProofWeb if the final result is valid by clicking `File > Load` and looking for the icon in front of the task. An orange flag in front of the task means tactics were used that are not allowed. You can inspect which tactics and where by clicking on the question mark button after the task.
 
@@ -97,11 +97,11 @@ This guide is written to use [Visual Studio Code] (VS Code) as an editor. If you
         code --install-extension maximedenes.vscoq
         ```
 
-   4. Opening VS Code with the VsCoq extension active for the first time will probably throw up the following error message, ignore it.
+   4. Opening VS Code with the VsCoq extension active for the first time will probably throw the following error message, ignore it by choosing 'Cancel'
       ![Error message throw after installing vscoq, ignore it](images/vscoq-installation-error.png)
-      Click it away by pressing `Cancel` and proceed to the next step, where we will solve it.
+      Proceed to the next step, where we will solve it.
 
-5. To make `vscoq` able to function, we will add the path to the installed location of `vscoqtop` to the User Settings of the extension:
+5. To solve this we will add the path to the installed location of `vscoqtop` to the User Settings of the extension:
 
    1. Find the path to `vscoqtop`. For Windows users using the installer this will be
 
@@ -145,7 +145,7 @@ Windows users can download our custom installer from our [latest release] page. 
 2. Allow the installer to make changes on your device by clicking `Yes` to enter the installation wizard. Then click past the start and agree to Rocq's user license agreement.
 3. Next you may choose which components to install. Of these, only `coqide` is not required for the course. If you do not want `coqide`, uncheck it and click `Next`.
 
-   `coqide` is a dedicated ide created for Rocq. You may choose to use this during the course, but it does not provide some of the custom the functionality of our VS Code extension or ProofWeb. To be sure your exercise is allowed for this course, you can copy the file to ProofWeb and check there.
+   `coqide` is a dedicated ide created for Rocq. You may choose to use this during the course, but it does not provide some of the custom functionality of our VS Code extension or ProofWeb. To be sure your exercise is allowed for this course, you can copy the file to ProofWeb and check there.
 
    ![Choosing which components to install](images/choose-components-installer.png)
 
@@ -159,13 +159,13 @@ Windows users can download our custom installer from our [latest release] page. 
 
 ### When there are dependency conflicts when installing `opam pin add LnA`
 
-You may need a more recent version of `opam`. Upgrading opam by large amount is not always the easiest process, but we found that deleting the entire opam directory before installing a newer version using step 3.3 usually works.
+You may need a more recent version of `opam`. Upgrading opam is not always the easiest process, but we found that deleting the entire opam directory before installing a newer version using step 3.3 usually works.
 
 ### When coq files are highlighted, but the `Coq Goals` screen does not appear
 
 This can have multiple causes.
 
-- Check the if the `vscoq.path` setting is a valid path to the `vscoqtop` file. To find the settings you can search for VsCoq in the left activity bar, then click the little `manage` gear and click on Settings. The path to your `vscoqtop` should be displayed in the `VsCoq: Path` setting. Changing this path will only take effect after fully closing and re-opening VS Code.
+- Check if the `vscoq.path` setting is a valid path to the `vscoqtop` file. To find the settings you can search for VsCoq in the left activity bar, then click the little `manage` gear and click on Settings. The path to your `vscoqtop` should be displayed in the `VsCoq: Path` setting. Changing this path will only take effect after fully closing and re-opening VS Code.
 - VsCoq does not work with invalid Rocq file names, so check that the file name is a valid Rocq file name. Rocq file names must end in `.v` and cannot have special characters other than `-`.
 
 ### When the `intros` tactic in the test file is not highlighted red
