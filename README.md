@@ -92,19 +92,16 @@ This guide is written to use [Visual Studio Code] (VS Code) as an editor. If you
       code --install-extension LnA-vscode-extension-0.0.1.vsix
       ```
 
-5. Install the [`vscoq`] extension.
+      - Since our extension is dependent on the [VsCoq] extension, this should be downloaded automatically as well. If it is not in the list of extensions in the `Extensions` tab in the left Activity Bar, you can install it manually by running
+        ```shell
+        code --install-extension maximedenes.vscoq
+        ```
 
-   - Optionally, this can be done through a shell by running
+   4. Opening VS Code with the VsCoq extension active for the first time will probably throw up the following error message, ignore it.
+      ![Error message throw after installing vscoq, ignore it](images/vscoq-installation-error.png)
+      Click it away by pressing `Cancel` and proceed to the next step, where we will solve it.
 
-     ```shell
-     code --install-extension maximedenes.vscoq
-     ```
-
-   - Opening VS Code with this extension active for the first time will probably throw up the following error message, ignore it.
-     ![Error message throw after installing vscoq, ignore it](images/vscoq-installation-error.png)
-     Click it away by pressing `Cancel` and proceed to the next step, where we will solve it.
-
-6. To make `vscoq` able to function, we will add the path to the installed location of `vscoqtop` to the User Settings of the extension:
+5. To make `vscoq` able to function, we will add the path to the installed location of `vscoqtop` to the User Settings of the extension:
 
    1. Find the path to `vscoqtop`. For Windows users using the installer this will be
 
@@ -203,7 +200,7 @@ Packages that are not available through this repository will either likely provi
 
 [Visual Studio Code]: https://code.visualstudio.com/download
 [VSCodium]: https://github.com/VSCodium/vscodium/releases
-[`vscoq`]: https://marketplace.visualstudio.com/items?itemName=maximedenes.vscoq
+[VsCoq]: https://marketplace.visualstudio.com/items?itemName=maximedenes.vscoq
 [latest release]: https://github.com/logic-and-applications/rocq-lna/releases/latest
 [`opam`]: https://opam.ocaml.org/doc/Install.html
 [`coq-iris`]: https://gitlab.mpi-sws.org/iris/iris
