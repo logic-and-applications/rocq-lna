@@ -32,7 +32,7 @@ This guide is written to use [Visual Studio Code] (VS Code) as an editor. If you
 
    - Linux and Apple users can manually install the prerequisite packages through `opam`.
 
-     1. Apple users only: install `gpatch` using `brew install gpatch`
+     1. Apple users only: ensure [homebrew](https://brew.sh/) is installed.
      2. Install and initialize [`opam`] from the package manager of your choice, for example for Apple users:
 
         ```shell
@@ -67,7 +67,15 @@ This guide is written to use [Visual Studio Code] (VS Code) as an editor. If you
         sudo apt install bzip2 rsync make bubblewrap gcc git patch unzip curl
         ```
 
-     4. Download and install our custom LnA library and its dependencies through opam by running:
+     4. Initialize opam and its dependencies by running
+        ```shell
+        opam init
+        ```
+     5. Add the opam environment to the current shell by running
+        ```shell
+        eval $(opam env)
+        ```
+     6. Download and install our custom LnA library and its dependencies through opam by running:
         ```shell
         opam pin add -y LnA https://github.com/logic-and-applications/rocq-lna/releases/download/v0.0.1/LnA-0.0.1.tar.gz
         ```
