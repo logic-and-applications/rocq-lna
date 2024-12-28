@@ -24,6 +24,7 @@ This guide is written to use [Visual Studio Code] (VS Code) as an editor. If you
    ![Example of a VS Code working in a shell](images/code-in-shell.png)
 
    - If you have a working installation of VS Code, but `code -v` does not work, you might have to add the installation directory to your PATH environment variable.
+   - Apple users can add VS Code to their PATH using [these instructions](https://code.visualstudio.com/docs/setup/mac#_launching-from-the-command-line).
 
 3. Next we will install `vscoq-language-server` and our `LnA` package:
 
@@ -71,10 +72,12 @@ This guide is written to use [Visual Studio Code] (VS Code) as an editor. If you
         ```shell
         opam init
         ```
+        and completing the process by answering any questions.
      5. Add the opam environment to the current shell by running
         ```shell
         eval $(opam env)
         ```
+        - running this should give no output
      6. Download and install our custom LnA library and its dependencies through opam by running:
         ```shell
         opam pin add -y LnA https://github.com/logic-and-applications/rocq-lna/releases/download/v0.0.1/LnA-0.0.1.tar.gz
@@ -84,9 +87,8 @@ This guide is written to use [Visual Studio Code] (VS Code) as an editor. If you
 
 4. Download and install our custom VS Code extension: `LnA-VS-code`.
 
-   1. Go to the [latest release]
-   2. Download the `LnA-vscode-extension-0.0.1.vsix` file
-   3. Navigate to the location of the downloaded file in a shell (for example by navigating to it in explorer and right clicking in the folder on the `Open in Terminal` option) and run
+   1. Download the [`LnA-vscode-extension-0.0.1.vsix`] file
+   2. Navigate to the location of the downloaded file in a shell (for example by navigating to it in explorer and right clicking in the folder on the `Open in Terminal` option) and run
 
       ```shell
       code --install-extension LnA-vscode-extension-0.0.1.vsix
@@ -97,7 +99,7 @@ This guide is written to use [Visual Studio Code] (VS Code) as an editor. If you
         code --install-extension maximedenes.vscoq
         ```
 
-   4. Opening VS Code with the VsCoq extension active for the first time will probably throw the following error message, ignore it by choosing 'Cancel'
+   3. Opening VS Code with the VsCoq extension active for the first time will probably throw the following error message, ignore it by choosing 'Cancel'
       ![Error message throw after installing vscoq, ignore it](images/vscoq-installation-error.png)
       Proceed to the next step, where we will solve it.
 
@@ -117,7 +119,7 @@ This guide is written to use [Visual Studio Code] (VS Code) as an editor. If you
 
       on unix machines with opam added to the PATH environment correctly.
 
-   2. Add this path to the `path` setting of `vscoq` (press ctrl+shift+P in VS Code and type "User Settings (JSON)", then hit Enter). Saving this file will save the setting.
+   2. Add this path to the `path` setting of `vscoq` (Open VS Code, then press Ctrl/Cmd+Shift+P and type "User Settings (JSON)", then hit Enter). Saving this file will save the setting.
       ```json
       {
          "vscoq.path": "C:\\cygwin_LnA\\home\\runneradmin\\.opam\\LnA\\bin\\vscoqtop.exe"
@@ -205,3 +207,4 @@ Packages that are not available through this repository will either likely provi
 [`opam`]: https://opam.ocaml.org/doc/Install.html
 [`coq-iris`]: https://gitlab.mpi-sws.org/iris/iris
 [the test file]: https://github.com/logic-and-applications/rocq-lna/blob/main/extension/src/test/coq-files/benbta_yes_tauto.v
+[LnA-vscode-extension-0.0.1.vsix]: https://github.com/logic-and-applications/rocq-lna/releases/download/v0.0.1/lna-vscode-extension-0.0.1.vsix
