@@ -4,6 +4,8 @@ The [`release_builder.yml`] workflow contains a job called `build-windows-instal
 
 Additionally, update the `depends` property in [LnA.opam](/library/LnA.opam). Ensure locally that the version of `vscoq-language-server` works well with this new version of Coq/Rocq. If it does not, ensure that our own extension still works with the version of `vscoq-language-server` that is supported and update both this opam file and possibly the extension.
 
+### Creating a release
+
 Once everything is ready, you can either run the workflow manually or preferably create a tagged commit containing a version number. Do this by running the following script with the new release version number (e.g., `v1.0.0` instead of `<version tag>`).
 
 ```shell
