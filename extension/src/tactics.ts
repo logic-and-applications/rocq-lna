@@ -43,6 +43,7 @@ const allowed_tacs_LnApose = ["pose proof"].concat(allowed_tacs_benb);
 
 // ***************************************************************
 
+type AllowList = { default: string[] } & Record<string, string[]>;
 export const allowLists = {
     default: allowed_tacs_benb,
 
@@ -52,7 +53,7 @@ export const allowLists = {
     benbta_proof: allowed_tacs_benbta,
     benbin_proof: allowed_tacs_benbin,
     lnapose_proof: allowed_tacs_LnApose,
-} as const;
+} as const satisfies AllowList;
 export type pragma = keyof typeof allowLists;
 export const pragmas = Object.keys(allowLists);
 
