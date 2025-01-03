@@ -1,5 +1,5 @@
-From Coq Require Export Reals.
-From Coq Require Export Lra.
+Require Export Reals.
+Require Export Lra.
 
 Require Import Classical.
 
@@ -251,7 +251,7 @@ Tactic Notation "lin_solve" :=
 
 (* --------- curry_assumptions ---------- *)
 
-Local Ltac curry_assumptions_go :=
+Ltac curry_assumptions_go :=
    lazymatch goal with
    | |- _ /\ _ -> _ =>
        let H1 := fresh in
