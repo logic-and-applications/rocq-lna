@@ -1,13 +1,13 @@
 # LnA Library
 
-This library is created for the Radboud University Computing Science course 'Logic and Applications'. It is based on two coq files called `BenB.v` and `BenB2.v`, which were created for a an older version of coq and no longer compile.
+This library is created for the Radboud University Computing Science course 'Logic and Applications'. The [`LnA.v`](https://github.com/logic-and-applications/rocq-lna/blob/main/library/LnA.v) file is based on coq files called `BenB.v`, `BenB2.v`, which were created for a an older version of coq and no longer compile. The additional Kripke-files still work and did not need to be changed.
 
 ## Making Changes for Maintainers
 
 For maintainers of this project it is important to know a few things:
 
-1. The two methods of installing the LnA package
-2. How the library is tested
+1. The two methods of installing the LnA package.
+2. How the library is tested.
 
 ### `opam` as Installation Method
 
@@ -33,7 +33,7 @@ When committing any changes to the `library` subdirectory, the [`test_library.ym
 make -f Makefile.local.test
 ```
 
-from the `library` subdirectory. This runs a Makefile based on the [`Makefile.coq.local`](https://gitlab.mpi-sws.org/iris/iris/-/blob/master/Makefile.coq.local) file from Iris. It is used to automatically run coqc on the test `.v` files in the ./tests directory. It then makes user-specific file paths on failures generic using `test-normalizer.sed` and compares the output to the corresponding `.ref` file.
+from the `library` subdirectory. This runs a Makefile based on the [`Makefile.coq.local`](https://gitlab.mpi-sws.org/iris/iris/-/blob/master/Makefile.coq.local) file from [Iris](https://gitlab.mpi-sws.org/iris/iris/). It is used to automatically run coqc on the test `.v` files in the ./tests directory. It then makes user-specific file paths on failures generic using `test-normalizer.sed` and compares the output to the corresponding `.ref` file.
 
 When making changes to the LnA library, run the test makefile locally and check if all the changes reported by this test run are behaving as expected. Fix any bugs that may occur. Once everything functions as expected, you can update the `.ref` files to the new expected output by running
 

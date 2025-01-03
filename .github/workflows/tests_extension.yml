@@ -5,7 +5,7 @@ on:
     branches:
       - "*"
     paths:
-      - "extension/**"
+      - "extension/src/**"
 
 jobs:
   test-extension:

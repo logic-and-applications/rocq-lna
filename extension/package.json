@@ -10,9 +10,6 @@
   "categories": [
     "Other"
   ],
-  "files": [
-    "images/*"
-  ],
   "activationEvents": [
     "onLanguage:coq"
   ],
