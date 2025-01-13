@@ -85,18 +85,9 @@ More specifically, the steps of this job do the following:
 
     This step is currently commented out, but is an example of how to sign the installer once we obtain a certificate. This certificate must, of course, not be pushed to this repository. The `secrets` environment variables can instead be set by the repository owner under `Settings > Security > Secrets and variables > Actions`.
 
-```
-   EH: 'This step also makes it possible to use in later actions' is unclear to me.
-   To use what exactly in later actions? Or should it be 'to be used in later actions'?
-
-   I added 'this `upload` job' in the last sentence, but is that indeed what is meant here?
-   Or is the `release` job something on a different level and therefore using `upload` job in
-   a similar style make no sense?
-```
-
 11. **Upload Artifact**:
 
-    Uploads the installer under the name `LnA-Windows-installer` to github as an artifact. Once this step is complete it will show up in github under the `Actions` tab by navigating to this workflow and scrolling down to `Artifacts` at the bottom of the page. Normally jobs are isolated environments. This step also makes it possible to use the created installer file in later jobs. We do this in the `release` job. The `release` job is only allowed to start after this job is finished, because this `upload` job is one of the jobs in the `needs` list seen in the `release` job.
+    Uploads the installer under the name `LnA-Windows-installer` to github as an artifact. Once this step is complete it will show up in github under the `Actions` tab by navigating to this workflow and scrolling down to `Artifacts` at the bottom of the page. While normally jobs are isolated environments, this step also enables use of the created installer file in later jobs. We do this in the `release` job, for example. The `release` job is only allowed to start after this job is finished, because this `upload` job is one of the jobs in the `needs` list seen in the `release` job.
 
 <!-- Links -->
 
