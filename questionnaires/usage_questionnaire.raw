@@ -2,12 +2,11 @@
 Section 1: Demographics and Background
     What is your role?
         Student
-        Teacher/Teaching Assistant
         Other
 
     Which proof checker have you tried to use for at least one task during this course?
         ProofWeb
-        Rocq-LnA (The Visual Studio Code based checker)
+        VsCoq
         Both
 
     Did you use any of the proof checker outside the scope of the course?
@@ -33,12 +32,10 @@ Section 1: Demographics and Background
         At least two years of experience
 
 Section 2: ProofWeb Evaluation (For Users of Proofweb)
-    How would you rate the usability of the ProofWeb?
-        Very Poor
+    How would you rate the usability of ProofWeb?
         Poor
         Neutral
         Good
-        Excellent
 
     What features or aspects of ProofWeb did you find most useful?
         <Open-ended>
@@ -56,11 +53,9 @@ Section 2: ProofWeb Evaluation (For Users of Proofweb)
 
 Section 3: Rocq-LnA Evaluation (For Users of Rocq-LnA)
     How would you rate the usability of Rocq-LnA?
-        Very Poor
         Poor
         Neutral
         Good
-        Excellent
 
     What features or aspects of Rocq-LnA did you find most useful?
         <Open-ended>
@@ -97,11 +92,9 @@ Section 3: Comparative Feedback (For Users of Both Systems)
 
     >split up into table<
     In terms of performance (e.g., speed, reliability, availability), how do the two systems compare?
-        ProofWeb is much better
-        ProofWeb is somewhat better
+        ProofWeb is better
         About the same
-        Rocq-LnA is somewhat better
-        Rocq-LnA is much better
+        Rocq-LnA is better
 
     Are there any features or aspects of ProofWeb you miss in Rocq-LnA?
         <Open-ended>
