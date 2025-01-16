@@ -124,7 +124,7 @@ Tactic Notation "exi_i" constr(X) :=
      [exists X
      |let T := type of X in
       fail 1 "(the type" T "of" X "does not match the type" A " of the quantifier)"
-     |fail 1 "(the argument" X "is not a valid term)"]
+     ]
   | |- _ => fail "(the goal is not an existential quantification)"
   end.
 
