@@ -122,26 +122,26 @@ Tactic failure: (the type Y of y does not match the type X
  of the quantifier).
 "sad_test_exi_i_not_exists"
      : string
-File "./tests/LnA_simple_tactics_sad.v", line 122, characters 8-21:
+File "./tests/LnA_simple_tactics_sad.v", line 118, characters 8-21:
 The command has indeed failed with message:
 Tactic failure: (the goal is not an existential quantification).
 "sad_test_exi_e_H_exists"
      : string
-File "./tests/LnA_simple_tactics_sad.v", line 128, characters 13-58:
+File "./tests/LnA_simple_tactics_sad.v", line 124, characters 13-58:
 The command has indeed failed with message:
 Tactic failure: (the label H already exists).
 "sad_test_exi_e_xNew_exists"
      : string
-File "./tests/LnA_simple_tactics_sad.v", line 132, characters 13-58:
+File "./tests/LnA_simple_tactics_sad.v", line 128, characters 13-58:
 The command has indeed failed with message:
 Tactic failure: (the label xNew already exists).
 "sad_test_exi_e_not_exists"
      : string
-File "./tests/LnA_simple_tactics_sad.v", line 136, characters 8-31:
+File "./tests/LnA_simple_tactics_sad.v", line 132, characters 8-31:
 The command has indeed failed with message:
 Tactic failure: (the argument is not an existential quantification).
 "sad_test_neg_i_not_neg"
      : string
-File "./tests/LnA_simple_tactics_sad.v", line 142, characters 13-22:
+File "./tests/LnA_simple_tactics_sad.v", line 138, characters 13-22:
 The command has indeed failed with message:
 Tactic failure: (the goal is not a negation).
