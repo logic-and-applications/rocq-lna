@@ -18,15 +18,7 @@ It is an offline extension with no reference to an original document, so be care
 
 This guide is written to use [Visual Studio Code] (VS Code) as an editor. If you prefer not to send any telemetry, [VSCodium] should work, just replace all instances of `code` in this guide with `codium`.
 
-1. First make sure you have a working installation of [Visual Studio Code].
-2. Check if the editor is added to the PATH environment variable by opening a shell (eg. using Terminal, Powershell, etc) of your choice and running `code -v`. This should look similar to the following, the version may differ:
-
-   ![Example of a VS Code working in a shell](images/code-in-shell.png)
-
-   - If you have a working installation of VS Code, but `code -v` does not work, you might have to add the installation directory to your PATH environment variable.
-   - Apple users can add VS Code to their PATH using [these instructions](https://code.visualstudio.com/docs/setup/mac#_launching-from-the-command-line).
-
-3. Next we will install `vscoq-language-server` and our `LnA` package:
+1. Install `vscoq-language-server` and our `LnA` package in one of the following ways:
 
    - Windows users can do this by downloading the file called ` LnA-windows-installer.exe` from our [latest release] page.
      DO NOT CHANGE THE INSTALLATION LOCATION. For more information on using this installer, got to the [dedicated section](#using-the-installer-for-windows-users) for using the installer on this page.
@@ -83,11 +75,20 @@ This guide is written to use [Visual Studio Code] (VS Code) as an editor. If you
         opam pin add -y LnA https://github.com/logic-and-applications/rocq-lna/releases/download/v0.0.1/LnA-0.0.1.tar.gz
         ```
         - The `-y` flag answers `yes` to the question if the versions to install are correct (and most other questions that may arise)
-        - This step may take a while. You can move on with the next steps. They are mostly possible to do independently, except running `which vscoqtop` (step 6.1) and actually using the `vscoq` extension (step 6.3).
+        - This step may take a while. You can move on with the next steps. the VsCoq extension will not function until this step finishes, so ignore errors that look like:
+          ![Error thrown if vscoq-language-server is not yet installed](images/vscoq-installation-error.png)
 
-4. Download and install our custom VS Code extension: `LnA-VS-code`.
+2. Download and install our custom VS Code extension: `LnA-VS-code`.
+
+   1. First make sure you have a working installation of [Visual Studio Code] and check if the editor is added to the PATH environment variable. Do this by opening a shell (eg. using Terminal, Powershell, etc) of your choice and running `code -v`. This should look similar to the following, the version may differ:
+
+   ![Example of a VS Code working in a shell](images/code-in-shell.png)
+
+   - If you have a working installation of VS Code, but `code -v` does not work, you might have to add the installation directory to your PATH environment variable.
+   - Apple users can add VS Code to their PATH using [these instructions](https://code.visualstudio.com/docs/setup/mac#_launching-from-the-command-line).
 
    1. Download the [`LnA-vscode-extension-0.0.1.vsix`] file
+
    2. Navigate to the location of the downloaded file in a shell (for example by navigating to it in explorer and right clicking in the folder on the `Open in Terminal` option) and run
 
       ```shell
@@ -98,35 +99,6 @@ This guide is written to use [Visual Studio Code] (VS Code) as an editor. If you
         ```shell
         code --install-extension maximedenes.vscoq
         ```
-
-   3. Opening VS Code with the VsCoq extension active for the first time will probably throw the following error message, ignore it by choosing 'Cancel'
-      ![Error message throw after installing vscoq, ignore it](images/vscoq-installation-error.png)
-      Proceed to the next step, where we will solve it.
-
-5. To solve this we will add the path to the installed location of `vscoqtop` to the User Settings of the extension:
-
-   1. Find the path to `vscoqtop`. For Windows users using the installer this will be
-
-      ```
-      "C:\\cygwin_LnA\\home\\runneradmin\\.opam\\LnA\\bin\\vscoqtop"
-      ```
-
-      Otherwise, you can find it by running
-
-      ```shell
-      which vscoqtop
-      ```
-
-      on unix machines with opam added to the PATH environment correctly.
-
-   2. Add this path to the `path` setting of `vscoq` (Open VS Code, then press Ctrl/Cmd+Shift+P and type "User Settings (JSON)", then hit Enter). Saving this file will save the setting.
-      ```json
-      {
-         "vscoq.path": "C:\\cygwin_LnA\\home\\runneradmin\\.opam\\LnA\\bin\\vscoqtop.exe"
-         ...there may be other options
-      }
-      ```
-   3. Close and re-open VS Code. The extension should now work for any `.v` file.
 
 If everything worked, you should now be able to download or copy [the test file] in a [trusted workspace](https://code.visualstudio.com/docs/editor/workspace-trust) to enable extensions. Open the file and step through the file using `Alt+DownArrow`, or to the cursor using `Alt+RightArrow`. A second window should open to the right, and it should look similar to the following image:
 
@@ -180,7 +152,7 @@ You may find that you want to explore Rocq's capabilities beyond the scope of th
 
 ### Installing custom packages after having used the Windows installer
 
-_We are still working on a way to do this_
+Our installer provides a very minimal set of packages. If you don't need the library provided for this course, your best course of action is probably to use the latest [Rocq Platform binary installer](https://rocq-prover.org/install#windows). If you do need custom libraries like ours, follow [these instructions](https://github.com/coq/platform/blob/2024.10.1/doc/README_Windows.md#installation-by-compiling-from-sources-using-scripts--opam) to create a Cygwin installation to create an environment where you can use `opam` just like Linux or Mac users.
 
 ### Installing custom packages with `opam`
 
