@@ -92,11 +92,12 @@ jobs:
           copy main\library\* C:\cygwin_LnA\home\runneradmin\LnA
           C:\cygwin_LnA\bin\bash --login -c "ls && opam pin add -y ./LnA"
 
+      # Uses xcopy to copy deeply
       - name: Install SCcoq
         shell: cmd
         run: |
           mkdir C:\cygwin_LnA\home\runneradmin\SCcoq
-          copy main\SC-library\* C:\cygwin_LnA\home\runneradmin\SCcoq
+          xcopy main\SC-library\** C:\cygwin_LnA\home\runneradmin\SCcoq /s
           C:\cygwin_LnA\bin\bash --login -c "ls && opam pin add -y ./SCcoq"
 
       - name: Create installer
