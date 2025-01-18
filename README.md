@@ -117,9 +117,7 @@ Windows users can download our custom installer from our [latest release] page. 
    ![Bypassing unsigned installer warning](images/bypassing-unsigned-installer-warning.png)
 
 2. Allow the installer to make changes on your device by clicking `Yes` to enter the installation wizard. Then click past the start and agree to Rocq's user license agreement.
-3. Next you may choose which components to install. Of these, only `coqide` is not required for the course. If you do not want `coqide`, uncheck it and click `Next`.
-
-   `coqide` is a dedicated ide created for Rocq. You may choose to use this during the course, but it does not provide some of the custom functionality of our VS Code extension or ProofWeb. To be sure your exercise is allowed for this course, you can copy the file to ProofWeb and check there.
+3. Next you may choose which components to install.
 
    ![Choosing which components to install](images/choose-components-installer.png)
 
