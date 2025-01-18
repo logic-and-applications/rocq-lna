@@ -4,6 +4,10 @@ The [`release_builder.yml`] workflow contains a job called `build-windows-instal
 
 Additionally, replace the `depends` property in [LnA.opam](/library/LnA.opam) with the new Rocq version, so just `"8.20"` for the example. Ensure locally that the version of `vscoq-language-server` works well with this new version of Coq/Rocq by manually running the tests as described in [the dedicated paragraph](https://github.com/logic-and-applications/rocq-lna/tree/main/library#testing). If it does not, ensure that our own extension still works with the version of `vscoq-language-server` that is supported and update both this opam file and possibly the extension.
 
+You can test if everything worked by manually running the `Build and Release` workflow with the `Build the Windows installer` flag set:
+![Manually running the `create installer` workflow](/images/manually-running-build-and-release.png)
+This will build the selected artifacts, but will not create a release automatically, unlike creating an automatic release described in the next section.
+
 ### Creating a release
 
 Once everything is ready, you can either run the workflow manually or preferably create a tagged commit containing a version number. Do this by running the following script with the new release version number (e.g., `v1.0.0` instead of `<version tag>`).
@@ -41,13 +45,17 @@ More specifically, the steps of this job do the following:
 
    Retrieves the entire [Coq Platform] repository and stores it under the `/platform` repository
 
-4. **Set switch name in coq platform**:
+4. **Download EnVar Plugin**
+
+   Downloads and unpacks the [NSIS plugin `EnVar`](https://github.com/GsNSIS/EnVar/). This plugin is used to add the installation directory to the PATH environment variable in a [safe](https://nsis.sourceforge.io/Setting_Environment_Variables) way. Adding the directory to PATH allows VsCoq to find the installation location of `vscoq-language-server`.
+
+5. **Set switch name in coq platform**:
 
    Modifies the [`coq_platform_switch_name.sh`](https://github.com/coq/platform/blob/main/package_picks/coq_platform_switch_name.sh) file to change the coq switch name from a generic coq platform switch to our switch name `LnA`.
 
    We have to modify the file this way, as it will be used by coq platform scripts later by `platform/coq_platform_make_windows.bat`.
 
-5. **Set default install directory**:
+6. **Set default install directory**:
 
    Modifies the `platform/windows/Coq.nsi` to change the default installation directory seen in the final installer to `C:\cygwin_LnA\home\runneradmin\.opam\\\LnA`. This matches the installation directory created by running `platform/coq_platform_make_windows.bat`.
 
@@ -55,7 +63,7 @@ More specifically, the steps of this job do the following:
 
    The `platform/windows/Coq.nsi` file is used by the `platform/windows/create_installer_windows.sh` script.
 
-6. **Run coq platform make windows**:
+7. **Run coq platform make windows**:
 
    runs the `platform/coq_platform_make_windows.bat` script to first install cygwin, and then a few libraries. The arguments given do the following:
 
@@ -69,23 +77,23 @@ More specifically, the steps of this job do the following:
    - `-jobs=2`: Amount of jobs for parallelization.
    - `-vst=n`: Tells coq platform not to build Verified Software Toolchain
 
-7. **Patch installer**:
+8. **Patch installer**:
 
-   Patches the `windows/create_installer_windows.sh` file in the cygwin directory by copying `installer/patch_installer.sh` to that directory and running it. The `create_installer _windows` script assumes `-compcert=y` was set during the previous step and this fixes it. If, in the future, other patches need to be made, this is probably the place to add those patches.
+   Patches the `windows/create_installer_windows.sh` file in the cygwin directory by copying `installer/patch_installer.sh` to that directory and running it. The `create_installer _windows` script assumes `-compcert=y` was set and that `coqide` was installed during the previous step and this script fixes both. It also inserts the use of the EnVar plugin to set add to the PATH environment variable.
 
-8. **Install LnA**:
+9. **Install LnA**:
 
    Installs our library and all its dependencies on the cygwin directory such that they are added to the installer in the next step. The `depends` field in the [`LnA.opam`](/library/LnA.opam) file configures what the dependencies are that are installed along with it. This process already installed Rocq/Coq, so that is skipped here. However, `vscoq-language-server`, is installed now because of the dependency in this step.
 
-9. **Create installer**:
+10. **Create installer**:
 
-   Creates the installer by running `windows/create_installer_windows.sh` in the cygwin directory. Once this is done it is copied to `/installer/`, which is a location more easily accessible for next steps.
+    Creates the installer by running `windows/create_installer_windows.sh` in the cygwin directory. Once this is done it is copied to `/installer/`, which is a location more easily accessible for next steps.
 
-10. **Sign the installer**:
+11. **Sign the installer**:
 
     This step is currently commented out, but is an example of how to sign the installer once we obtain a certificate. This certificate must, of course, not be pushed to this repository. The `secrets` environment variables can instead be set by the repository owner under `Settings > Security > Secrets and variables > Actions`.
 
-11. **Upload Artifact**:
+12. **Upload Artifact**:
 
     Uploads the installer under the name `LnA-Windows-installer` to github as an artifact. Once this step is complete it will show up in github under the `Actions` tab by navigating to this workflow and scrolling down to `Artifacts` at the bottom of the page. While normally jobs are isolated environments, this step also enables use of the created installer file in later jobs. We do this in the `release` job, for example. The `release` job is only allowed to start after this job is finished, because this `upload` job is one of the jobs in the `needs` list seen in the `release` job.
 
