@@ -16,8 +16,8 @@ on:
         type: boolean
         required: true
         default: false
-      build_library:
-        description: "Compress the Rocq LnA library"
+      build_libraries:
+        description: "Compress the Rocq LnA and SCcoq libraries"
         type: boolean
         required: true
         default: false
@@ -92,6 +92,13 @@ jobs:
           copy main\library\* C:\cygwin_LnA\home\runneradmin\LnA
           C:\cygwin_LnA\bin\bash --login -c "ls && opam pin add -y ./LnA"
 
+      - name: Install SCcoq
+        shell: cmd
+        run: |
+          mkdir C:\cygwin_LnA\home\runneradmin\SCcoq
+          copy main\SC-library\* C:\cygwin_LnA\home\runneradmin\SCcoq
+          C:\cygwin_LnA\bin\bash --login -c "ls && opam pin add -y ./SCcoq"
+
       - name: Create installer
         shell: cmd
         run: |
@@ -147,9 +154,9 @@ jobs:
   ###############################################################################
   # Builds the Rocq library LnA
   ###############################################################################
-  archive-library:
+  archive-libraries:
     runs-on: ubuntu-latest
-    if: ${{ inputs.build_library }}
+    if: ${{ inputs.build_libraries }}
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -157,17 +164,22 @@ jobs:
       - name: Inject slug/short variables
         uses: rlespinasse/github-slug-action@v5
 
-      - name: Create library archive
+      - name: Create LnA library archive
         run: |
           cd library
           VERSION=${GITHUB_REF_NAME#v}
           git archive -o ../LnA-$VERSION.tar.gz --prefix="LnA-$VERSION/" $GITHUB_SHA .
 
+      - name: Create SCcoq library archive
+        run: |
+          cd SC-library
+          git archive -o ../SCcoq.tar.gz $GITHUB_SHA .
+
       - name: Upload `.tar.gz` as Artifact
         uses: actions/upload-artifact@v4
         with:
           name: library-archive
-          path: ./LnA-*.tar.gz
+          path: ./*.tar.gz
 
   ###############################################################################
   # Collects all artifacts and puts them on the releases page
@@ -175,7 +187,7 @@ jobs:
   release:
     runs-on: ubuntu-latest
     if: ${{ github.event_name != 'workflow_dispatch' }}
-    needs: [build-windows-installer, build-vsix, archive-library] # Depends on other jobs
+    needs: [build-windows-installer, build-vsix, archive-libraries] # Depends on other jobs
     steps:
       - name: Download Extension Artifact
         uses: actions/download-artifact@v4

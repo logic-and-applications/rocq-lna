@@ -1,0 +1,23 @@
+opam-version: "2.0"
+version: "1.0"
+synopsis: "Library for Radboud University CS course Semantics and Correctness"
+description: """
+This is a library that creates tactics which match the theoretical proof rules taught 
+during Radboud University CS course Semantics and Correctness. The idea of this library
+is to match proofs build using Rocq as closely as possible to proof trees build by hand.
+"""
+maintainer: "Name <email>"
+authors: [
+    "Engelbert Hubbers"
+]
+license: "BSD-3-Clause"
+bug-reports: "https://github.com/logic-and-applications/rocq-lna/issues"
+dev-repo: "git+https://github.com/logic-and-applications/rocq-lna/"
+homepage: "https://github.com/logic-and-applications/rocq-lna"
+depends: [ 
+    "coq" { >= "8.19" } 
+]
+build: [
+  [make]
+]
+install: [make "install"]

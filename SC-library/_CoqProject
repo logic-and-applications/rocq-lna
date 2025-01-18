@@ -1,0 +1,26 @@
+-R . "SCcoq"
+
+TotalMap.v
+Framework_common.v
+NS/FrameworkNS.v
+
+NS.v
+
+NS/Determinism.v
+NS/FrameworkScopes.v
+
+SOS/Framework_SOS.v
+
+SOS.v
+
+SOS/strong_progress.v
+SOS/multi_k.v
+SOS/SOS_star_k.v
+SOS/corr_SOS_NS.v
+SOS/Framework_SOS_small_exp.v
+
+AS/FrameworkAS.v
+
+AS.v
+
+ApplicationAS.v
