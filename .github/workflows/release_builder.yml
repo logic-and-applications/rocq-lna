@@ -4,6 +4,23 @@ on:
   push:
     tags:
       - "v*.*.*" # Trigger only on version tags
+  workflow_dispatch:
+    inputs:
+      build_installer:
+        description: "Build the Windows installer"
+        type: boolean
+        required: true
+        default: true
+      build_extension:
+        description: "Build the custom VS Code extension"
+        type: boolean
+        required: true
+        default: false
+      build_library:
+        description: "Compress the Rocq LnA library"
+        type: boolean
+        required: true
+        default: false
 
 env:
   COQREGTESTING: y
@@ -15,6 +32,7 @@ jobs:
   build-windows-installer:
     name: Windows
     runs-on: windows-latest
+    if: ${{ inputs.build_installer }}
     strategy:
       fail-fast: false
       matrix:
@@ -37,6 +55,12 @@ jobs:
         with:
           repository: coq/platform
           path: platform
+
+      - name: Download EnVar Plugin
+        run: |
+          Invoke-WebRequest -Uri "https://github.com/GsNSIS/EnVar/releases/download/v0.3.1/EnVar-Plugin.zip" -OutFile "EnVar.zip"
+          Expand-Archive -Path "EnVar.zip" -DestinationPath "platform\windows\envar"
+          tree .
 
       - name: Set switch name in coq platform
         shell: cmd
@@ -94,6 +118,7 @@ jobs:
   ###############################################################################
   build-vsix:
     runs-on: ubuntu-latest
+    if: ${{ inputs.build_extension }}
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -124,6 +149,7 @@ jobs:
   ###############################################################################
   archive-library:
     runs-on: ubuntu-latest
+    if: ${{ inputs.build_library }}
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -148,6 +174,7 @@ jobs:
   ###############################################################################
   release:
     runs-on: ubuntu-latest
+    if: ${{ github.event_name != 'workflow_dispatch' }}
     needs: [build-windows-installer, build-vsix, archive-library] # Depends on other jobs
     steps:
       - name: Download Extension Artifact
