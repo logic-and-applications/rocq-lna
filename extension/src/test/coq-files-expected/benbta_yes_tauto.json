@@ -2,7 +2,7 @@
   {
     "range": [
       { "line": 7, "character": 0 },
-      { "line": 7, "character": 8 }
+      { "line": 7, "character": 7 }
     ],
     "hoverMessage": "tactic intros is not allowed for benbta_proof proofs."
   }

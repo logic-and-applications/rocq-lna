@@ -1,43 +1,64 @@
 [
   {
     "range": [
-      { "line": 21, "character": 0 },
-      { "line": 21, "character": 7 }
+      { "line": 26, "character": 2 },
+      { "line": 26, "character": 8 }
     ],
     "hoverMessage": "tactic intros is not allowed for default proofs."
   },
   {
     "range": [
-      { "line": 21, "character": 7 },
-      { "line": 21, "character": 21 }
+      { "line": 28, "character": 4 },
+      { "line": 28, "character": 16 }
     ],
-    "hoverMessage": "tactic  pose proof H is not allowed for default proofs."
+    "hoverMessage": "tactic pose proof H is not allowed for default proofs."
   },
   {
     "range": [
-      { "line": 21, "character": 21 },
-      { "line": 21, "character": 29 }
+      { "line": 30, "character": 2 },
+      { "line": 30, "character": 8 }
     ],
-    "hoverMessage": "tactic  tauto is not allowed for default proofs."
+    "hoverMessage": "tactic tauto is not allowed for default proofs."
   },
   {
     "range": [
-      { "line": 16, "character": 19 },
-      { "line": 16, "character": 27 }
+      { "line": 21, "character": 0 },
+      { "line": 21, "character": 6 }
     ],
-    "hoverMessage": "tactic  tauto is not allowed for default proofs."
+    "hoverMessage": "tactic intros is not allowed for default proofs."
   },
   {
     "range": [
-      { "line": 11, "character": 9 },
-      { "line": 11, "character": 20 }
+      { "line": 21, "character": 8 },
+      { "line": 21, "character": 20 }
     ],
-    "hoverMessage": "tactic  intros H2 is not allowed for default proofs."
+    "hoverMessage": "tactic pose proof H is not allowed for default proofs."
+  },
+  {
+    "range": [
+      { "line": 21, "character": 24 },
+      { "line": 21, "character": 30 }
+    ],
+    "hoverMessage": "tactic tauto is not allowed for default proofs."
+  },
+  {
+    "range": [
+      { "line": 16, "character": 20 },
+      { "line": 16, "character": 26 }
+    ],
+    "hoverMessage": "tactic tauto is not allowed for default proofs."
+  },
+  {
+    "range": [
+      { "line": 11, "character": 10 },
+      { "line": 11, "character": 19 }
+    ],
+    "hoverMessage": "tactic intros H2 is not allowed for default proofs."
   },
   {
     "range": [
       { "line": 6, "character": 0 },
-      { "line": 6, "character": 10 }
+      { "line": 6, "character": 9 }
     ],
     "hoverMessage": "tactic intros H1 is not allowed for default proofs."
   }

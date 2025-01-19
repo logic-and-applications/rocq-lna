@@ -2,6 +2,42 @@
   "proofs": [
     {
       "statement": {
+        "statement": "Lemma combined_tactics_with_newlines_in_between: A -> A -> A.",
+        "range": {
+          "end": { "character": 61, "line": 24 },
+          "start": { "character": 0, "line": 24 }
+        }
+      },
+      "range": {
+        "end": { "character": 4, "line": 31 },
+        "start": { "character": 0, "line": 25 }
+      },
+      "steps": [
+        {
+          "tactic": "Proof.",
+          "range": {
+            "end": { "character": 6, "line": 25 },
+            "start": { "character": 0, "line": 25 }
+          }
+        },
+        {
+          "tactic": "intros; \n  \n    pose proof H; \n\n  tauto.",
+          "range": {
+            "end": { "character": 8, "line": 30 },
+            "start": { "character": 2, "line": 26 }
+          }
+        },
+        {
+          "tactic": "Qed.",
+          "range": {
+            "end": { "character": 4, "line": 31 },
+            "start": { "character": 0, "line": 31 }
+          }
+        }
+      ]
+    },
+    {
+      "statement": {
         "statement": "Lemma combined_tactics4: A -> A -> A.",
         "range": {
           "end": { "character": 37, "line": 19 },
@@ -21,9 +57,9 @@
           }
         },
         {
-          "tactic": "intros; pose proof H; tauto.",
+          "tactic": "intros; pose proof H;   tauto.",
           "range": {
-            "end": { "character": 28, "line": 21 },
+            "end": { "character": 30, "line": 21 },
             "start": { "character": 0, "line": 21 }
           }
         },

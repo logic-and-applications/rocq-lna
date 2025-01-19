@@ -19,5 +19,14 @@ Qed.
 
 Lemma combined_tactics4: A -> A -> A.
 Proof.
-intros; pose proof H; tauto.
+intros; pose proof H;   tauto.
+Qed.
+
+Lemma combined_tactics_with_newlines_in_between: A -> A -> A.
+Proof.
+  intros; 
+  
+    pose proof H; 
+
+  tauto.  
 Qed.
