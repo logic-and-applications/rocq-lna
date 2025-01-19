@@ -32,7 +32,7 @@ jobs:
   build-windows-installer:
     name: Windows
     runs-on: windows-latest
-    if: ${{ inputs.build_installer }}
+    if: ${{ inputs.build_installer || github.event_name != 'workflow_dispatch'}}
     strategy:
       fail-fast: false
       matrix:
@@ -126,7 +126,7 @@ jobs:
   ###############################################################################
   build-vsix:
     runs-on: ubuntu-latest
-    if: ${{ inputs.build_extension }}
+    if: ${{ inputs.build_extension || github.event_name != 'workflow_dispatch' }}
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -157,7 +157,7 @@ jobs:
   ###############################################################################
   archive-libraries:
     runs-on: ubuntu-latest
-    if: ${{ inputs.build_libraries }}
+    if: ${{ inputs.build_libraries || github.event_name != 'workflow_dispatch' }}
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
