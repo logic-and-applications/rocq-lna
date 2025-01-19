@@ -1,5 +1,5 @@
 opam-version: "2.0"
-version: "1.0"
+version: "1.0.0"
 synopsis: "Library for Radboud University CS course Logic and Applications"
 description: """
 This is a library that creates tactics which match the theoretical proof rules taught 

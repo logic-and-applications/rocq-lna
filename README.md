@@ -72,7 +72,7 @@ This guide is written to use [Visual Studio Code] (VS Code) as an editor. If you
         - running this should give no output
      6. Download and install our custom LnA library and its dependencies through opam by running:
         ```shell
-        opam pin add -y LnA https://github.com/logic-and-applications/rocq-lna/releases/download/v0.0.1/LnA-0.0.1.tar.gz
+        opam pin add -y LnA https://github.com/logic-and-applications/rocq-lna/releases/download/v1.0.0/LnA-1.0.0.tar.gz
         ```
         - The `-y` flag answers `yes` to the question if the versions to install are correct (and most other questions that may arise)
         - This step may take a while. You can move on with the next steps. the VsCoq extension will not function until this step finishes, so ignore errors that look like:
@@ -87,12 +87,12 @@ This guide is written to use [Visual Studio Code] (VS Code) as an editor. If you
    - If you have a working installation of VS Code, but `code -v` does not work, you might have to add the installation directory to your PATH environment variable.
    - Apple users can add VS Code to their PATH using [these instructions](https://code.visualstudio.com/docs/setup/mac#_launching-from-the-command-line).
 
-   1. Download the [`LnA-vscode-extension-0.0.1.vsix`] file
+   1. Download the [`LnA-vscode-extension-1.0.0.vsix`] file
 
    2. Navigate to the location of the downloaded file in a shell (for example by navigating to it in explorer and right clicking in the folder on the `Open in Terminal` option) and run
 
       ```shell
-      code --install-extension LnA-vscode-extension-0.0.1.vsix
+      code --install-extension LnA-vscode-extension-1.0.0.vsix
       ```
 
       - Since our extension is dependent on the [VsCoq] extension, this should be downloaded automatically as well. If it is not in the list of extensions in the `Extensions` tab in the left Activity Bar, you can install it manually by running
@@ -177,4 +177,4 @@ Packages that are not available through this repository will either likely provi
 [`opam`]: https://opam.ocaml.org/doc/Install.html
 [`coq-iris`]: https://gitlab.mpi-sws.org/iris/iris
 [the test file]: https://github.com/logic-and-applications/rocq-lna/blob/main/extension/src/test/coq-files/benbta_yes_tauto.v
-[LnA-vscode-extension-0.0.1.vsix]: https://github.com/logic-and-applications/rocq-lna/releases/download/v0.0.1/lna-vscode-extension-0.0.1.vsix
+[LnA-vscode-extension-1.0.0.vsix]: https://github.com/logic-and-applications/rocq-lna/releases/download/v1.0.0/lna-vscode-extension-1.0.0.vsix
