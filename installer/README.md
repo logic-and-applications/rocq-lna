@@ -10,6 +10,8 @@ This will build the selected artifacts, but will not create a release automatica
 
 ### Creating a release
 
+Some of the files contain a hardcoded version number. Look at [this commit](https://github.com/logic-and-applications/rocq-lna/commit/9a5002e3ae724fca3725decbe79bb5d3e8543357) to see where changes will need to be made to update those instances.
+
 Once everything is ready, you can either run the workflow manually or preferably create a tagged commit containing a version number. Do this by running the following script with the new release version number (e.g., `v1.0.0` instead of `<version tag>`).
 
 ```shell
