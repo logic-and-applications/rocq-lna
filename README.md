@@ -26,7 +26,7 @@ This guide is written to use [Visual Studio Code] (VS Code) as an editor. If you
    - Linux and Apple users can manually install the prerequisite packages through `opam`.
 
      1. Apple users only: ensure [homebrew](https://brew.sh/) is installed.
-     2. Install and initialize [`opam`] from the package manager of your choice, for example for Apple users:
+     2. Install [`opam`] from the package manager of your choice, for example for Apple users:
 
         ```shell
         brew update
@@ -65,7 +65,7 @@ This guide is written to use [Visual Studio Code] (VS Code) as an editor. If you
         opam pin add -y LnA https://github.com/logic-and-applications/rocq-lna/releases/download/v1.0.0/LnA-1.0.0.tar.gz
         ```
         - The `-y` flag answers `yes` to the question if the versions to install are correct (and most other questions that may arise)
-        - This step may take a while. You can move on with the next steps. the VsCoq extension will not function until this step finishes, so ignore errors that look like:
+        - This step may take a while (+10 min). You can move on with the next steps. the VsCoq extension will not function until this step finishes, so ignore errors that look like:
           ![Error thrown if vscoq-language-server is not yet installed](images/vscoq-installation-error.png)
 
 2. Download and install our custom VS Code extension: `LnA-VS-code`.
