@@ -25,12 +25,6 @@ This tag must be of the form `v*.*.*` or the workflow will not trigger. Once thi
 
 The [`release_builder.yml`] workflow contains a job called `build-windows-installer`.
 
-```
-   EH: 'On this environment it and we then install all our Coq libraries' is clearly not a
-   good sentence, but what did you want to say? 'Within this cygwin environment we then install
-   all our Coq libraries'?
-```
-
 In short, this job uses [Coq Platform] to install [cygwin](https://cygwin.com/) to emulate a unix-like environment. Within this cygwin environment we then install Rocq, Coqide and all our additional libraries and their dependencies. After everything is installed, it creates a windows installer from this environment.
 
 More specifically, the steps of this job do the following:
