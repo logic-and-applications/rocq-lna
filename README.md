@@ -48,17 +48,7 @@ This guide is written to use [Visual Studio Code] (VS Code) as an editor. If you
         opam --version
         ```
 
-        If it is, move on to the next step. If it is not, you need to install opam using the following script from the [opam installation guide](https://opam.ocaml.org/doc/Install.html):
-
-        ```shell
-        bash -c "sh <(curl -fsSL https://opam.ocaml.org/install.sh)"
-        ```
-
-        This will not install all the dependencies, so you might also need to install them by running
-
-        ```shell
-        sudo apt install bzip2 rsync make bubblewrap gcc git patch unzip curl
-        ```
+        If it is not, consider upgrading your operating system to get a more recent package repository, as this will probably happen for other courses in the future too. Alternatively, go to the [associated troubleshooting section](#when-the-installed-opam-version-is-lower-than-210) to install a more recent version.
 
      4. Initialize opam and its dependencies by running
         ```shell
@@ -82,14 +72,14 @@ This guide is written to use [Visual Studio Code] (VS Code) as an editor. If you
 
    1. First make sure you have a working installation of [Visual Studio Code] and check if the editor is added to the PATH environment variable. Do this by opening a shell (eg. using Terminal, Powershell, etc) of your choice and running `code -v`. This should look similar to the following, the version may differ:
 
-   ![Example of a VS Code working in a shell](images/code-in-shell.png)
+      ![Example of a VS Code working in a shell](images/code-in-shell.png)
 
-   - If you have a working installation of VS Code, but `code -v` does not work, you might have to add the installation directory to your PATH environment variable.
-   - Apple users can add VS Code to their PATH using [these instructions](https://code.visualstudio.com/docs/setup/mac#_launching-from-the-command-line).
+      - If you have a working installation of VS Code, but `code -v` does not work, you might have to add the installation directory to your PATH environment variable.
+      - Apple users can add VS Code to their PATH using [these instructions](https://code.visualstudio.com/docs/setup/mac#_launching-from-the-command-line).
 
    1. Download the [`LnA-vscode-extension-1.0.0.vsix`] file
 
-   2. Navigate to the location of the downloaded file in a shell (for example by navigating to it in explorer and right clicking in the folder on the `Open in Terminal` option) and run
+   1. Navigate to the location of the downloaded file in a shell (for example by navigating to it in explorer and right clicking in the folder on the `Open in Terminal` option) and run
 
       ```shell
       code --install-extension LnA-vscode-extension-1.0.0.vsix
@@ -144,6 +134,20 @@ This can have multiple causes.
 
 Check first if both the `LnA-vscode-extension` and the `VsCoq` extensions visible in the `Extensions` tab on the left Activity Bar. If they are and VsCoq is functioning, see if the file you are using matches [the test file] exactly, and the `intros` tactic is not above the `(*! benbta_proof *)` comment, as that will disable the check. Finally, fully closing and re-opening VS Code might fix the problem.
 
+### When the installed `opam` version is lower than 2.1.0
+
+If installing `opam` with `apt` or `brew` gives a version that is too old, you need to install opam using the following script from the [opam installation guide](https://opam.ocaml.org/doc/Install.html):
+
+```shell
+bash -c "sh <(curl -fsSL https://opam.ocaml.org/install.sh)"
+```
+
+This will not install all the dependencies, so you might also need to install them by running
+
+```shell
+sudo apt install bzip2 rsync make bubblewrap gcc git patch unzip curl
+```
+
 ## Installing custom packages
 
 You may find that you want to explore Rocq's capabilities beyond the scope of this course. If you do, here are some instructions of how to install additional packages that are not used in this course. If you do, here is some help on how to do that if you installed Rocq using our instructions:
@@ -177,4 +181,4 @@ Packages that are not available through this repository will either likely provi
 [`opam`]: https://opam.ocaml.org/doc/Install.html
 [`coq-iris`]: https://gitlab.mpi-sws.org/iris/iris
 [the test file]: https://github.com/logic-and-applications/rocq-lna/blob/main/extension/src/test/coq-files/benbta_yes_tauto.v
-[LnA-vscode-extension-1.0.0.vsix]: https://github.com/logic-and-applications/rocq-lna/releases/download/v1.0.0/lna-vscode-extension-1.0.0.vsix
+[`LnA-vscode-extension-1.0.0.vsix`]: https://github.com/logic-and-applications/rocq-lna/releases/download/v1.0.0/lna-vscode-extension-1.0.0.vsix
