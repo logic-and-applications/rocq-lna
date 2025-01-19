@@ -4,6 +4,7 @@
   "description": "A VS Code extension made for Radboud's CS course Logic and Application to be used in combination with vscoq",
   "version": "0.0.1",
   "publisher": "logic-and-applications-ru",
+  "repository": "https://github.com/logic-and-applications/rocq-lna",
   "engines": {
     "vscode": "^1.95.0"
   },
