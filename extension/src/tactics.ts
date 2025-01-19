@@ -2,7 +2,7 @@
 const general_tacs = ["Focus", "Unfocus", "SearchAbout", "Check", "Print", "Eval", "About", "Locate", "Proof", "Qed"];
 
 // Placeholder for constructive proofs:
-const allowed_tacs_benbco = [
+const allowed_tacs_lnaco = [
     "hyp", "assumption", "exact", "imp_e", "imp_i",
     "neg_e", "neg_i", "con_e1", "con_e2", "con_i",
     "dis_e", "dis_i1", "dis_i2", "iff_i", "iff_e1",
@@ -18,16 +18,16 @@ const allowed_tacs_benbco = [
 ].concat(general_tacs);
 
 // Placeholder for classical proofs:
-const allowed_tacs_benbcl = ["neg_e'"].concat(allowed_tacs_benbco);
+const allowed_tacs_lnacl = ["neg_e'"].concat(allowed_tacs_lnaco);
 
 // Placeholder for classical proofs plus "LEM": (this is the default, it replaces the deprecated "benb_proof")
-const allowed_tacs_benb = ["LEM"].concat(allowed_tacs_benbcl);
+const allowed_tacs_lna = ["LEM"].concat(allowed_tacs_lnacl);
 
 // Placeholder that in addition to the defaults allows the usage of "tauto":
-const allowed_tacs_benbta = ["tauto"].concat(allowed_tacs_benb);
+const allowed_tacs_lnata = ["tauto"].concat(allowed_tacs_lna);
 
 // Placeholder for (structural) induction. 
-const allowed_tacs_benbin = [
+const allowed_tacs_lnain = [
     "absurd", "all", "assert", "auto", "case",
     "change", "Check", "clear", "compute", "constructor",
     "contradiction", "cut", "destruct", "discriminate", "easy",
@@ -37,22 +37,22 @@ const allowed_tacs_benbin = [
     "repeat", "rewrite", "right", "ring", "ring_simplify",
     "simpl", "spec", "split", "trivial", "try",
     "f_equal",
-].concat(allowed_tacs_benbta);
+].concat(allowed_tacs_lnata);
 
 // Placeholder that in addition to the defaults allows the usage of "pose proof":
-const allowed_tacs_LnApose = ["pose proof"].concat(allowed_tacs_benb);
+const allowed_tacs_LnApose = ["pose proof"].concat(allowed_tacs_lna);
 
 // ***************************************************************
 
 type AllowList = { default: string[] } & Record<string, string[]>;
 export const allowLists = {
-    default: allowed_tacs_benb,
+    default: allowed_tacs_lna,
 
-    benbco_proof: allowed_tacs_benbco,
-    benbcl_proof: allowed_tacs_benbcl,
-    benb_proof: allowed_tacs_benb,
-    benbta_proof: allowed_tacs_benbta,
-    benbin_proof: allowed_tacs_benbin,
+    lnaco_proof: allowed_tacs_lnaco,
+    lnacl_proof: allowed_tacs_lnacl,
+    lna_proof: allowed_tacs_lna,
+    lnata_proof: allowed_tacs_lnata,
+    lnain_proof: allowed_tacs_lnain,
     lnapose_proof: allowed_tacs_LnApose,
 } as const satisfies AllowList;
 export type pragma = keyof typeof allowLists;
