@@ -27,7 +27,7 @@ Section 1: Before Setup
         <Yes/No>
 
 Next, to continue this questionnaire, please first read and complete the following steps:
-1. Download the following test file to an empty directory: (<https://github.com/logic-and-applications/rocq-lna/blob/main/extension/src/test/coq-files/benbta_yes_tauto.v>). 
+1. Download the following test file to an empty directory: (<https://github.com/logic-and-applications/rocq-lna/blob/main/extension/src/test/coq-files/lnata_yes_tauto.v>). 
 2. Start a stopwatch (e.g. using https://www.timeanddate.com/stopwatch/). You may stop the stopwatch once you are able to run the test file in and it looks similar to this image: 
 <https://github.com/logic-and-applications/rocq-lna/raw/main/images/running-vscoq.png>
 Specifically, `test is defined` must be visible in messages and there must be a red line under `intros`.

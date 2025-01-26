@@ -17,6 +17,6 @@ imp_i H.
 
 Lemma test_unfinished4: A -> A.
 Proof.
-(*! benbta_proof*)
+(*! lnata_proof*)
 intros.
 tauto.

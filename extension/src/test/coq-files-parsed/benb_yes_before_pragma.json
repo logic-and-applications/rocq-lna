@@ -2,7 +2,7 @@
   "proofs": [
     {
       "statement": {
-        "statement": "Lemma test_benb_yes_before_pragma: A -> A.",
+        "statement": "Lemma test_lna_yes_before_pragma: A -> A.",
         "range": {
           "end": { "character": 42, "line": 4 },
           "start": { "character": 0, "line": 4 }
