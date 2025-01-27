@@ -10,7 +10,7 @@ The custom Rocq package is simply called LnA. It provides a set of tactics which
 
 ### LnA-vscode-extension
 
-The custom VS Code extension is built to provide immediate feedback on which tactics are used when they are not supposed to be. It uses special comment blocks, like `(*! benbta_proof *)`, to distinguish which set of tactics should be allowed.
+The custom VS Code extension is built to provide immediate feedback on which tactics are used when they are not supposed to be. It uses special comment blocks, like `(*! benbta_proof *)`, to distinguish which set of tactics should be allowed. Only tactics _after_ the special comment blocks are checked, so be sure to only work after these blocks.
 
 It is an offline extension with no reference to an original document, so be careful not to change these comment blocks or the premise of a `Lemma` or `Theorem`. Doing this will not cause the extension to create a warning or error in VS Code, but it will be caught by ProofWeb when handing it in. You can always check in ProofWeb if the final result is valid by clicking `File > Load` and looking for the icon in front of the task. An orange flag in front of the task means tactics were used that are not allowed. You can inspect which tactics and where by clicking on the question mark button after the task.
 
@@ -92,7 +92,7 @@ This guide is written to use [Visual Studio Code] (VS Code) as an editor. If you
 
 If everything worked, you should now be able to download or copy [the test file] in a [trusted workspace](https://code.visualstudio.com/docs/editor/workspace-trust) to enable extensions. Open the file and step through the file using `Alt+DownArrow`, or to the cursor using `Alt+RightArrow`. A second window should open to the right, and it should look similar to the following image:
 
-![An example of a correctly running vscoq installation](/images/running-vscoq.png)
+![An example of a correctly running vscoq installation](images/running-vscoq.png)
 
 ### Using the Installer for Windows Users
 
