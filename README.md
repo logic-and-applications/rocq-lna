@@ -1,4 +1,4 @@
-# Roqc-LnA README
+# Rocq-LnA README
 
 This repository is created for the Radboud University Computing Science course 'Logic and Applications'. The goal of it is to create a Rocq environment where the tactics match as closely as possible to logical rules taught in this course.
 
