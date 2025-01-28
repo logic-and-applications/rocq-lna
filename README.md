@@ -148,6 +148,22 @@ This will not install all the dependencies, so you might also need to install th
 sudo apt install bzip2 rsync make bubblewrap gcc git patch unzip curl
 ```
 
+### When the latest version of `vscoq-language-server` provided by opam is less then 2.2.3
+
+The VS Code extension requires new features provided in version 2.2.3 of `vscoq-language-server`. If installing the LnA library or installing it manually gives an error that this version cannot be found, you probably need to update your opam repository by running 
+```shell
+opam upgrade
+```
+After this you can retry installing `vscoq-language-server` by running 
+```shell
+opam install vscoq-language-server.2.2.3
+```
+or re-running the installation script for installing the LnA library:
+```shell
+opam pin add -y LnA https://github.com/logic-and-applications/rocq-lna/releases/download/v1.0.0/LnA-1.0.0.tar.gz
+```
+
+
 ## Installing custom packages
 
 You may find that you want to explore Rocq's capabilities beyond the scope of this course. If you do, here are some instructions of how to install additional packages that are not used in this course. If you do, here is some help on how to do that if you installed Rocq using our instructions:
