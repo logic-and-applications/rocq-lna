@@ -117,7 +117,7 @@ Windows users can download our custom installer from our [latest release] page. 
 
    ![DO NOT CHANGE THE INSTALLATION DIRECTORY!](images/do-not-change-the-installation-directory.png)
 
-5. Continue with step 4 from the [Installation Guide](#installation-guide).
+5. Continue with step 2 from the [Installation Guide](#installation-guide).
 
 ## Troubleshooting
 
