@@ -16,7 +16,7 @@ It is an offline extension with no reference to an original document, so be care
 
 # Installation guide
 
-This guide is written to use [Visual Studio Code] (VS Code) as an editor. If you prefer not to send any telemetry, [VSCodium] should work, just replace all instances of `code` in this guide with `codium`.
+This guide is written to use [Visual Studio Code] (VS Code) as an editor. If you prefer not to send any telemetry, [VSCodium] should work, just replace all instances of `code` in this guide with `codium`. Check the [Troubleshooting section](#troubleshooting) if any problems occur.
 
 1. Install `vscoq-language-server` and our `LnA` package in one of the following ways:
 
@@ -94,6 +94,8 @@ If everything worked, you should now be able to download or copy [the test file]
 
 ![An example of a correctly running vscoq installation](images/running-vscoq.png)
 
+If does not work, check the [Troubleshooting section](#troubleshooting)  for a possible solution.
+
 ### Using the Installer for Windows Users
 
 Windows users can download our custom installer from our [latest release] page. DO NOT CHANGE THE INSTALLATION DIRECTORY!
@@ -118,6 +120,39 @@ Windows users can download our custom installer from our [latest release] page. 
 5. Continue with step 4 from the [Installation Guide](#installation-guide).
 
 ## Troubleshooting
+
+### When `code -v` opens VS Code instead of displaying a version
+
+This is a strange bug that occurs when VS Code's PATH environment variable points to code.exe directly, instead of the \bin subdirectory that points to it. You will need to change this entry.
+(see https://stackoverflow.com/questions/78157066/why-doesnt-the-code-help-command-display-help-in-command-prompt)
+
+### VsCoq throws an error that `vscoq-language-server` is not installed
+If you see the following error:
+![Error thrown if vscoq-language-server is not yet installed](images/vscoq-installation-error.png)
+This means VsCoq cannot find the path to the vscoq-language-server location. First try simply restarting VS Code, the extension only searches for the location when starting the extension. If that does not work, you can enter the location manually by taking the following steps:
+
+1. Find the path to `vscoqtop`. For Windows users using the installer this will be
+
+   ```
+   "C:\\cygwin_LnA\\home\\runneradmin\\.opam\\LnA\\bin\\vscoqtop"
+   ```
+
+   Otherwise, you can find it by running
+
+   ```shell
+   which vscoqtop
+   ```
+
+   on unix machines with opam added to the PATH environment correctly.
+
+2. Add this path to the `path` setting of `vscoq` (Open VS Code, then press Ctrl/Cmd+Shift+P and type "User Settings (JSON)", then hit Enter). Saving this file will save the setting.
+   ```json
+   {
+      "vscoq.path": "C:\\cygwin_LnA\\home\\runneradmin\\.opam\\LnA\\bin\\vscoqtop.exe"
+      ...there may be other options
+   }
+   ```
+3. Close and re-open VS Code. 
 
 ### When there are dependency conflicts when installing `opam pin add LnA`
 
