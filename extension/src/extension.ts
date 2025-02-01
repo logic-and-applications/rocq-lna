@@ -1,7 +1,8 @@
 import allowLists, { pragma, pragmas } from './tactics';
 import { DocumentProofsResponse, ProofBlock, VscoqExport } from './types';
-import { DecorationOptions, Extension, extensions, Position, Range, TextDocument, window, workspace } from 'vscode';
+import { commands, DecorationOptions, Extension, ExtensionContext, extensions, Position, Range, TextDocument, window, workspace } from 'vscode';
 import splitWithRange from './splitWithRange';
+import { minimatch } from 'minimatch';
 
 // The delay of waiting after each change before updating the decorations
 const UPDATE_DELAY_MS = 300;
@@ -126,6 +127,12 @@ function triggerUpdateDecorations(document: TextDocument, delay = UPDATE_DELAY_M
 	timeout = setTimeout(() => updateDecorations(document), delay);
 }
 
+// Helper that applies the provided decoration options to the active editor.
+function applyDecorations(decorations: DecorationOptions[]) {
+	log.appendLine(`Applied decorations:\n ${JSON.stringify(decorations)}`);
+	window.activeTextEditor?.setDecorations(decoration, decorations);
+}
+
 /**
  * Refreshes the decorations for the given document by fetching the latest proof data and applying 
  * the corresponding decorations. If the request is canceled by the server, the function will 
@@ -136,13 +143,14 @@ function triggerUpdateDecorations(document: TextDocument, delay = UPDATE_DELAY_M
  */
 async function updateDecorations(document: TextDocument) {
 
-	// Helper that applies the provided decoration options to the active editor.
-	function applyDecorations(decorations: DecorationOptions[]) {
-		log.appendLine(`Applied decorations:\n ${JSON.stringify(decorations)}`);
-		window.activeTextEditor?.setDecorations(decoration, decorations);
+	// Helper that checks if the fileName should be excluded because of the excluded Patterns configuration
+	function isExcluded(fileName: string) {
+		return workspace.getConfiguration("rocq-lna").excludedPatterns?.some(
+			(pattern: string) => minimatch(fileName, pattern)
+		);
 	}
 
-	if (!window.activeTextEditor) { return; }
+	if (!window.activeTextEditor || isExcluded(window.activeTextEditor.document.fileName)) { return; }
 
 	try {
 
@@ -171,7 +179,7 @@ const log = window.createOutputChannel('rocq-lna');
  * Activates the extension and sets up event listeners for editor and document changes.
  * When the active editor or document changes, it triggers the decoration update process.
  */
-export function activate() {
+export function activate(context: ExtensionContext) {
 	vscoq = extensions.getExtension('maximedenes.vscoq');
 	log.appendLine("Extension activated");
 
@@ -196,6 +204,13 @@ export function activate() {
 			await triggerUpdateDecorations(event.document);
 		}
 	});
+
+	context.subscriptions.push(commands.registerTextEditorCommand("extension.rocq-lna.excludeFile", (event) => {
+		const excludedPatterns = workspace.getConfiguration("rocq-lna").excludedPatterns ?? [];
+		excludedPatterns.push(event.document.fileName);
+		workspace.getConfiguration().update("rocq-lna.excludedPatterns", excludedPatterns);
+		applyDecorations([]);
+	}));
 }
 
 // This method is called when your extension is deactivated
