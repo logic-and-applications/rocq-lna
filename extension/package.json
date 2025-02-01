@@ -19,20 +19,20 @@
       {
         "command": "extension.rocq-lna.excludeFile",
         "category": "Rocq LnA",
-        "title": "Add to ignored files in workspace settings"
+        "title": "Add current file to ignored files in workspace settings"
       }
     ],
     "configuration": [
       {
-        "title": "Excluded files",
+        "title": "Excluded patterns",
         "properties": {
-          "rocq-lna.excludedFiles": {
+          "rocq-lna.excludedPatterns": {
             "type": "array",
             "items": {
               "type": "string"
             },
             "default": [],
-            "description": "The list of files which the lna vscode extension ignores"
+            "description": "The list of glob patterns which the lna vscode extension ignores"
           }
         }
       }
@@ -75,6 +75,7 @@
     "vsce": "^2.15.0"
   },
   "dependencies": {
+    "minimatch": "^10.0.1",
     "vscode-languageclient": "^9.0.1"
   }
 }

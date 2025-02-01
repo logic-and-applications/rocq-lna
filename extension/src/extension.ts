@@ -1,7 +1,8 @@
 import allowLists, { pragma, pragmas } from './tactics';
 import { DocumentProofsResponse, ProofBlock, VscoqExport } from './types';
-import { commands, DecorationOptions, Extension, ExtensionContext, extensions, Position, Range, TextDocument, Uri, window, workspace } from 'vscode';
+import { commands, DecorationOptions, Extension, ExtensionContext, extensions, Position, Range, TextDocument, window, workspace } from 'vscode';
 import splitWithRange from './splitWithRange';
+import { minimatch } from 'minimatch';
 
 // The delay of waiting after each change before updating the decorations
 const UPDATE_DELAY_MS = 300;
@@ -142,7 +143,14 @@ function applyDecorations(decorations: DecorationOptions[]) {
  */
 async function updateDecorations(document: TextDocument) {
 
-	if (!window.activeTextEditor || workspace.getConfiguration("rocq-lna").excludedFiles?.includes(window.activeTextEditor.document.fileName)) { return; }
+	// Helper that checks if the fileName should be excluded because of the excluded Patterns configuration
+	function isExcluded(fileName: string) {
+		return workspace.getConfiguration("rocq-lna").excludedPatterns?.some(
+			(pattern: string) => minimatch(fileName, pattern)
+		);
+	}
+
+	if (!window.activeTextEditor || isExcluded(window.activeTextEditor.document.fileName)) { return; }
 
 	try {
 
@@ -198,9 +206,9 @@ export function activate(context: ExtensionContext) {
 	});
 
 	context.subscriptions.push(commands.registerTextEditorCommand("extension.rocq-lna.excludeFile", (event) => {
-		const excludedFiles = workspace.getConfiguration("rocq-lna").excludedFiles ?? [];
-		excludedFiles.push(event.document.fileName);
-		workspace.getConfiguration().update("rocq-lna.excludedFiles", excludedFiles);
+		const excludedPatterns = workspace.getConfiguration("rocq-lna").excludedPatterns ?? [];
+		excludedPatterns.push(event.document.fileName);
+		workspace.getConfiguration().update("rocq-lna.excludedPatterns", excludedPatterns);
 		applyDecorations([]);
 	}));
 }
