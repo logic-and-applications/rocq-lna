@@ -14,6 +14,30 @@
   "activationEvents": [
     "onLanguage:coq"
   ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "extension.rocq-lna.excludeFile",
+        "category": "Rocq LnA",
+        "title": "Add to ignored files in workspace settings"
+      }
+    ],
+    "configuration": [
+      {
+        "title": "Excluded files",
+        "properties": {
+          "rocq-lna.excludedFiles": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "default": [],
+            "description": "The list of files which the lna vscode extension ignores"
+          }
+        }
+      }
+    ]
+  },
   "main": "./dist/extension.js",
   "extensionDependencies": [
     "maximedenes.vscoq"
